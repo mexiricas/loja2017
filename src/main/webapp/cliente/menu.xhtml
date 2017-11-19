@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<div>
+
+	<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"></a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+			<h:form>
+				<ul class="nav navbar-nav">
+
+					<li><h:commandLink action="#{pessoaCtrl.actionInserirNovoCliente}"
+							value="Cadastro de Cliente" /></li>
+					<li><h:outputLink value="principal.xhtml">Acessar Área do Cliente</h:outputLink></li>
+
+					<li class="dropdown mega-dropdown active"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown">Dropdown <span
+							class="caret"></span></a>
+						<div class="dropdown-menu mega-dropdown-menu">
+							<div class="container-fluid">
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div class="tab-pane active" id="men">
+										<ul class="nav-list list-inline">
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png" /><span>Running</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png" /><span>Football</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png" /><span>Soccer</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_MensTraining.png" /><span>Men's
+														Training</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_WomensTraining.png" /><span>Women's
+														Training</span></a></li>
+										</ul>
+									</div>
+									<div class="tab-pane" id="women">
+										<ul class="nav-list list-inline">
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png" /><span>Running</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png" /><span>Basketball</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png" /><span>Football</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png" /><span>Soccer</span></a></li>
+										</ul>
+									</div>
+									<div class="tab-pane" id="kids">
+										<ul class="nav-list list-inline">
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png" /><span>Running</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png" /><span>Basketball</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png" /><span>Football</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png" /><span>Soccer</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_MensTraining.png" /><span>Men's
+														Training</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_WomensTraining.png" /><span>Women's
+														Training</span></a></li>
+										</ul>
+									</div>
+									<div class="tab-pane" id="sports">
+										<ul class="nav-list list-inline">
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png" /><span>Basketball</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png" /><span>Football</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png" /><span>Soccer</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_MensTraining.png" /><span>Men's
+														Training</span></a></li>
+											<li><a href="#"><img
+													src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_WomensTraining.png" /><span>Women's
+														Training</span></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- Nav tabs -->
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="active"><a href="#men" role="tab"
+									data-toggle="tab">Men</a></li>
+								<li><a href="#women" role="tab" data-toggle="tab">Women</a></li>
+								<li><a href="#kids" role="tab" data-toggle="tab">Kids</a></li>
+								<li><a href="#sports" role="tab" data-toggle="tab">Sports</a></li>
+							</ul>
+						</div></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li><h:outputLink value="admin/principal.xhtml">Acessar Área Administrativa</h:outputLink></li>
+
+					<li
+						onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"><a
+						href="#">Sair</a></li>
+
+				</ul>
+			</h:form>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid --> </nav>
+</div>
+</html>
+
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Lista de Pessoas</title>
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<p:growl id="msgs" showDetail="true" />
+
+		<div align="right">
+
+			<h:commandLink>
+				<p:graphicImage value="excel.png" width="24" />
+				<p:dataExporter type="xls" target="tbl" fileName="f" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="pdf.png" width="24" />
+				<p:dataExporter type="pdf" target="tbl" fileName="f" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="csv.png" width="24" />
+				<p:dataExporter type="csv" target="tbl" fileName="f" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="xml.png" width="24" />
+				<p:dataExporter type="xml" target="tbl" fileName="f" />
+			</h:commandLink>
+		</div>
+
+		<p:dataTable id="tbl" var="f" value="#{pessoaCtrl.listagem}"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+					 {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="10" style="margin-bottom:20px">
+
+			<f:facet name="header">
+				<h:outputLabel value="Lista de Pessoas" />
+				<p:commandButton value="Inserir" incon="icon-novo"
+					actionListener="#{pessoaCtrl.actionInserir}"
+					oncomplete="PF('cadDialog').show()" update=":form:cadDetail">
+				</p:commandButton>
+			</f:facet>
+
+			<p:column headerText="Código" sortBy="f.id">
+				<h:outputText value="#{f.id}" />
+			</p:column>
+
+			<p:column headerText="Nome" sortBy="f.nome">
+				<h:outputText value="#{f.nome}" />
+
+			</p:column>
+
+			<p:column headerText="CPF" sortBy="f.cpf">
+				<h:outputText value="#{f.cpf}" />
+
+			</p:column>
+
+			<p:column style="width:32px;text-align: center">
+				<p:commandButton update=":form:cadDetail"
+					oncomplete="PF('cadDialog').show()" icon="ui-icon-search" 
+					action="#{pessoaCtrl.actionAlterar(pessoaCtrl.pessoa)}" title="view">
+					<f:setPropertyActionListener value="#{f}"  
+						target="#{pessoaCtrl.pessoa}"/>
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:dialog header="Cadastro de Pessoas" widgetVar="cadDialog"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+			<p:outputPanel id="cadDetail" style="tex-align:center;">
+				<h:panelGrid columns="2" style="text-align: Left">
+
+					<h:outputLabel value="Código" />
+					<p:inputText value="#{pessoaCtrl.pessoa.id}" size="6"
+						maxlength="10" readonly="true" />
+
+					<h:outputLabel value="Nome" />
+					<p:inputText value="#{pessoaCtrl.pessoa.nome}" size="40"
+						maxlength="30" />
+
+					<h:outputLabel value="CPF" />
+					<p:inputText value="#{pessoaCtrl.pessoa.cpf}" size="20"
+						maxlength="11" />
+
+					<h:outputLabel value="RG" />
+					<p:inputText value="#{pessoaCtrl.pessoa.rg}" size="15"
+						maxlength="10" />
+
+					<h:outputLabel value="Data de Nascimento" />
+					<p:inputText value="#{pessoaCtrl.pessoa.data_nasc}" size="30"
+						maxlength="20">
+						<f:convertDateTime dateStyle="default" />
+					</p:inputText>
+
+					<h:outputLabel value="Rua" />
+					<p:inputText value="#{pessoaCtrl.pessoa.rua}" size="30"
+						maxlength="20" />
+
+					<h:outputLabel value="Bairro" />
+					<p:inputText value="#{pessoaCtrl.pessoa.bairro}" size="30"
+						maxlength="20" />
+
+					<h:outputLabel value="UF" />
+					<p:selectOneMenu id="estado" styleClass="form-control"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{pessoaCtrl.estado}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="#{pessoaCtrl.estado.est_sigla}" />
+						<f:selectItems value="#{pessoaCtrl.estados}" var="estado"
+							itemValue="#{estado}" itemLabel="#{estado.est_sigla}" />
+						<p:ajax listener="#{pessoaCtrl.popular}" update=":form:cidade" />
+
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Cidade" />
+					<p:selectOneMenu id="cidade" styleClass="form-control"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{pessoaCtrl.pessoa.cid.cid_id}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="#{pessoaCtrl.pessoa.cid.cid_nome}" />
+						<f:selectItems value="#{pessoaCtrl.cidades}" var="cidade"
+							itemValue="#{cidade.cid_id}" itemLabel="#{cidade.cid_nome}" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="CEP" />
+					<p:inputText value="#{pessoaCtrl.pessoa.cep}" size="30"
+						maxlength="20" />
+
+					<h:outputLabel value="Email" />
+					<p:inputText value="#{pessoaCtrl.pessoa.email}" size="30"
+						maxlength="20" />
+
+					<h:outputLabel value="Senha" />
+					<p:inputText value="#{pessoaCtrl.pessoa.senha}" size="30"
+						maxlength="20" />
+
+					<h:outputLabel value="Tipo" />
+					<p:inputText value="#{pessoaCtrl.pessoa.tipo}" size="30"
+						maxlength="20" />
+
+				</h:panelGrid>
+				<h:commandButton value="Excluir"
+					action="#{pessoaCtrl.actionExcluir}" update="growl" />
+				<h:commandButton value="Gravar" action="#{pessoaCtrl.actionGravar}"
+					update="growl" />
+				<h:commandButton value="Cancelar" oncomplete="cadDialog.hide()" />
+
+
+
+				<h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="fone"
+					rules="rows">
+					<f:facet name="header">
+						<h:commandButton value="Adicionar Fone"
+							action="#{pessoaCtrl.actionInserirFone}" />
+					</f:facet>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputLabel value="Número" />
+						</f:facet>
+						<h:inputText value="#{fone.numero}" size="20" maxlength="20" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputLabel value="Descrição" />
+						</f:facet>
+						<h:inputText value="#{fone.descricao}" size="30" maxlength="30" />
+					</h:column>
+					<h:column>
+						<h:commandLink value="Remover"
+							action="#{pessoaCtrl.actionExcluirFone(fone)}" />
+					</h:column>
+
+				</h:dataTable>
+				<h:commandButton value="Lista" action="lista_pessoa" />
+				<h:commandButton value="Gravar" action="#{pessoaCtrl.actionGravar}" />
+
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>
