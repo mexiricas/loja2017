@@ -2,150 +2,61 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title><ui:insert name="title">Loja Virtual</ui:insert></title>
-	<link rel="shortcut icon" href="#{resource['images/favicon.ico']}"
-		type="image/x-icon" />
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="title">Loja Virtual</ui:insert></title>
+        <link rel="shortcut icon" href="#{resource['images/favicon.ico']}"
+              type="image/x-icon" />
+        <link rel="stylesheet" href="resources/css/style.default.css"
+              type="text/css" />
+        <link rel="stylesheet" href="resources/css/style.css"
+              type="text/css" />
+        <link rel="stylesheet" href="resources/css/layout.css"
+              type="text/css" />
+        <f:facet name="first">
+            <h:outputStylesheet library="css" name="style.css" />
+            <h:outputStylesheet library="css" name="bootstrap-theme.css" />
+            <h:outputStylesheet library="css" name="bootstrap-theme.min.css" />
+            <h:outputStylesheet library="css" name="bootstrap.min.css" />
+            <h:outputStylesheet library="css" name="bootstrap.css" />
+            <h:outputStylesheet library="css" name="font-awesome.css" />
+            <h:outputStylesheet library="css" name="font-awesome.min.css" />
+            <h:outputScript library="js" name="formatar.js" />
+            <h:outputScript library="js" name="MascaraValidacao.js" />
+            <h:outputScript library="js" name="jquery.min.js" />
+            <h:outputScript library="js" name="bootstrap.min.js" />
+        </f:facet>
 
+    </h:head>
+    <h:body id="portfolio">
+        <div class="container">
+            <ui:insert name="menu">
+                <ui:include src="/cliente/menu.xhtml" />
+            </ui:insert>
+            <p:panel>
 
-	<f:facet name="first">
-		<h:outputStylesheet library="css" name="style.default.css" />
-		<h:outputStylesheet library="css" name="style.css" />
-		<h:outputStylesheet library="css" name="bootstrap-theme.css" />
-		<h:outputStylesheet library="css" name="bootstrap-theme.min.css" />
-		<h:outputStylesheet library="css" name="bootstrap.min.css" />
-		<h:outputStylesheet library="css" name="bootstrap.css" />
-		<link
-			href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
-			rel="stylesheet" id="bootstrap-css" />
-		<h:outputStylesheet library="css" name="font-awesome.css" />
-		<h:outputStylesheet library="css" name="font-awesome.min.css" />
-		<h:outputScript library="js" name="formatar.js" />
+                <ui:insert name="principal">
 
-		<h:outputScript library="js" name="MascaraValidacao.js" />
-		<h:outputScript library="js" name="jquery.min.js" />
-		<h:outputScript library="js" name="bootstrap.min.js" />
-	</f:facet>
-	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script
-		src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".dropdown").hover(function() {
-				$('.dropdown-menu', this).stop(true, true).slideDown("fast");
-				$(this).toggleClass('open');
-			}, function() {
-				$('.dropdown-menu', this).stop(true, true).slideUp("fast");
-				$(this).toggleClass('open');
-			});
-		});
-	</script>
+                </ui:insert>
 
-	<style type="text/css">
-.navbar-brand {
-	width: 70px;
-	height: 50px;
-	background:
-		url('http://www.sneaker-mission.com/uploads/3/1/2/7/31279819/5617441.png')
-		no-repeat center center;
-	background-size: 50px;
-}
-
-.nav-tabs {
-	display: inline-block;
-	border-bottom: none;
-	padding-top: 15px;
-	font-weight: bold;
-}
-
-.nav-tabs>li>a, .nav-tabs>li>a:hover, .nav-tabs>li>a:focus, .nav-tabs>li.active>a,
-	.nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
-	border: none;
-	border-radius: 0;
-}
-
-.nav-list {
-	border-bottom: 1px solid #eee;
-}
-
-.nav-list>li {
-	padding: 20px 15px 15px;
-	border-left: 1px solid #eee;
-}
-
-.nav-list>li:last-child {
-	border-right: 1px solid #eee;
-}
-
-.nav-list>li>a:hover {
-	text-decoration: none;
-}
-
-.nav-list>li>a>span {
-	display: block;
-	font-weight: bold;
-	text-transform: uppercase;
-}
-
-.mega-dropdown {
-	position: static !important;
-}
-
-.mega-dropdown-menu {
-	padding: 20px 15px 15px;
-	text-align: center;
-	width: 100%;
-}
-</style>
-	<script type="text/javascript">
-		window.alert = function() {
-		};
-		var defaultCSS = document.getElementById('bootstrap-css');
-		function changeCSS(css) {
-			if (css)
-				$('head > link')
-						.filter(':first')
-						.replaceWith(
-								'<link rel="stylesheet" href="'+ css +'" type="text/css" />');
-			else
-				$('head > link').filter(':first').replaceWith(defaultCSS);
-		}
-		$(document).ready(function() {
-			var iframe_height = parseInt($('html').height());
-			window.parent.postMessage(iframe_height, 'https://bootsnipp.com');
-		});
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".dropdown").hover(function() {
-				$('.dropdown-menu', this).stop(true, true).slideDown("fast");
-				$(this).toggleClass('open');
-			}, function() {
-				$('.dropdown-menu', this).stop(true, true).slideUp("fast");
-				$(this).toggleClass('open');
-			});
-		});
-	</script>
-</h:head>
-<h:body id="portfolio">
-	<div class="container">
-		<ui:insert name="menu">
-			<ui:include src="/cliente/menu.xhtml" />
-		</ui:insert>
-		<p:panel>
-
-			<ui:insert name="principal">
-
-			</ui:insert>
-
-			<ui:insert name="rodape">
-				<ui:include src="/publico/footer.xhtml" />
-			</ui:insert>
-		</p:panel>
-	</div>
-</h:body>
+                <ui:insert name="rodape">
+                    <ui:include src="/publico/footer.xhtml" />
+                </ui:insert>
+            </p:panel>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".dropdown").hover(function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                }, function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                });
+            });
+        </script>
+    </h:body>
 </html>

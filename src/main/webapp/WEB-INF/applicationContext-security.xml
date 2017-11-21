@@ -9,6 +9,7 @@
 	<http auto-config='true'>
 		<intercept-url pattern="/admin/**" access="ROLE_ADMINISTRATOR" />
 		<intercept-url pattern="/cliente/**" access="ROLE_CLIENTE" />
+                <access-denied-handler error-page="/publico/403.xhtml" />
 		<form-login login-page="/publico/login.xhtml"
 			always-use-default-target="true" authentication-success-handler-ref="authenticationSuccessHandler"
 			authentication-failure-url="/publico/login.xhtml?login_error=1" />

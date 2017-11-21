@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context reloadable="true">
+<Context reloadable="true" antiJARLocking="true" path="/Loja_Virtual">
 	<Resource 	name="jdbc/BDLojaVirtual" 
 			auth="Container" 
 			type="javax.sql.DataSource"

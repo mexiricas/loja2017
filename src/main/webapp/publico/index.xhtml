@@ -1,22 +1,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <ui:define name="principal">
+        <style>
+            .ui-widget, .ui-widget .ui-widget {
+                font-size: 12px !important;
+            }
+        </style>
+        <h:form id="form">
+            <p:panel header="Loja Virtual">
 
-<h:head>
-	<title>Loja Virtual</title>
-</h:head>
-<h:body>
-	<h:form>
-		<li><h:outputLink value="admin/lista_pessoa.xhtml">Cadastro de Cliente</h:outputLink></li>
-		<li><h:outputLink value="cliente/principal.xhtml">Acessar Área do Cliente</h:outputLink></li>
-		<li><h:outputLink value="admin/principal.xhtml">Acessar Área Administrativa</h:outputLink></li>
-	</h:form>
+                <p:dataGrid value="#{produtoCtrl.listagem}" var="prod" columns="4">
+                    <p:panel styleClass="thumbnail">
+                        <h:panelGrid columns="2" style="width:90%">
+                            <f:facet name="header">
+                                <div style="width: 80px"></div>
+                                <p:outputLabel value="#{prod.nome}" />
+                                <br />
+                                <strong>R$<h:outputLabel value="#{prod.preco}" /></strong>
 
-</h:body>
-
-</html>
+                            </f:facet>
+                            <p:commandButton value="COMPRAR"
+                                             action="#{carrinhoCtrl.adicionarItem(prod)}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
