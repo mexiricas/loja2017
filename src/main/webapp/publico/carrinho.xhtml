@@ -11,24 +11,26 @@
 
     <ui:define name="principal">
         <h:form>
-            <h:commandButton value="Continuar Comprando"
-                             action="/publico/index?faces-redirect=true"
-                             styleClass="btn btn-danger"/>
+           
             <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
                         columns="2">
                 <p:panel styleClass="thumbnail">
-                    <h:panelGrid columns="2" style="width:90%">
+                    <h:panelGrid columns="2">
                         <f:facet name="header">
                             <h:outputLabel value="#{obj_prod.nome}" /><br/>
                             <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
                         </f:facet>
+                        <h:column>
                         <h:commandButton value="+  Adicionar"
                                          actionListener="#{carrinhoCtrl.inserirProd(obj_prod)}"
                                          styleClass="btn btn-success"/>
+                        </h:column>
+                        <h:column>
 
                         <h:commandButton value="-   Remover"
                                          actionListener="#{carrinhoCtrl.actionIntemsRemover(obj_prod)}"
                                          styleClass="btn btn-default"/>
+                        </h:column>
                     </h:panelGrid>
 
 
@@ -51,10 +53,15 @@
                     <small>Quantidades de Produtos : 
                         <h:outputLabel for="forms" value="#{carrinhoCtrl.qdtTotal}"/></small><br/>
                         <label class="label-info"><p>Total: <span>R$<h:outputLabel value="#{carrinhoCtrl.subtotal}"/></span></p></label><br/>
-                    <h:commandButton value="Fechar Compra"
+                     </div>
+                        
+                        <h:commandButton value="Fechar Compra"
                                      action="#{carrinhoCtrl.verificarStatus()}"
-                                     styleClass="btn btn-success"/>
-                </div>
+                                     styleClass="btn btn-success pull-right"/>
+                     <h:commandButton value="Continuar Comprando"
+                             action="/publico/index?faces-redirect=true"
+                             styleClass="btn btn-danger "/>
+               
             </h:form>
           
         </h:form>
