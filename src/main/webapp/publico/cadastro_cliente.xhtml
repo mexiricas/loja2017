@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <ui:define name="principal">
+        <h:form id="form">
+            <p:panel header="Altera&ccedil;&atilde;o de Usu&aacute;rios">
+                <br />
+                <p:fieldset legend="Dados cadastrais">
+                    <br />
+                    <h:panelGrid columns="4" width="900">
+                        <h:column>
+                            <h:outputLabel value="Nome:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText id="nome" size="40"
+                                         value="#{pessoaCtrl.pessoa.nome}" />
+                        </h:column>
+
+                        <h:column>
+                            <h:outputLabel value="Senha:" />
+                        </h:column>
+                        <h:column>
+                            <p:password id="password" size="20"
+                                        value="#{pessoaCtrl.pessoa.senha}" />
+                        </h:column>
+
+                        <h:column>
+                            <h:outputLabel value="E-mail:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText id="email" size="40"
+                                         value="#{pessoaCtrl.pessoa.email}" />
+                        </h:column>
+
+                        <h:column>
+                            <h:outputLabel value="CPF:" />
+                        </h:column>
+
+                        <h:column>
+                            <p:inputText id="cpfcnpj" size="20"
+                                         value="#{pessoaCtrl.pessoa.cpf}" />
+                        </h:column>
+
+                        <h:column>
+                            <h:outputLabel value="RG:" />    
+                        </h:column>   
+                        <h:column>
+                            <p:inputText id="rg" size="20" value="#{pessoaCtrl.pessoa.rg}" />
+                        </h:column>
+
+                        <h:column>  
+                            <h:outputLabel value="Data de Nascimento:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText  id="da" 
+                                          value="#{pessoaCtrl.pessoa.data_nasc}" maxlength="10"
+                                          onkeypress="formatarData('##/##/####', this);">
+                                <f:convertDateTime locale="pt_BR" type="date" dateStyle="medium" />
+                            </p:inputText>
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel value="Status:" />
+                        </h:column>
+
+                        <h:column>
+                            <h:selectOneRadio id="status">
+                                <f:selectItem itemLabel="Ativo" itemValue="AT" />
+                                <f:selectItem itemLabel="Inativo" itemValue="IN" />
+                            </h:selectOneRadio>
+                        </h:column>
+                        <br />
+                    </h:panelGrid>
+
+                </p:fieldset>
+                <p:panel header="CONTATOS">
+                    <br />
+                    <h:panelGrid columns="4" width="900">
+                        <h:dataTable value="#{pessoaCtrl.pessoa.fones}" var="fone"
+                                     rules="rows">
+                            <f:facet name="header">
+                                <h:commandButton value="Adicionar Fone"
+                                                 action="#{pessoaCtrl.actionInserirFoneCliente}" />
+                            </f:facet>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputLabel value="Número" />
+                                </f:facet>
+                                <h:inputText value="#{fone.numero}" size="20" maxlength="20" />
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputLabel value="Descrição" />
+                                </f:facet>
+                                <h:inputText value="#{fone.descricao}" size="30" maxlength="30" />
+                            </h:column>
+                            <h:column>
+                                <h:commandLink value="Remover"
+                                               action="#{pessoaCtrl.actionExcluirFoneCliente(fone)}" />
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:panelGrid>
+                </p:panel>
+                <br />
+                <p:fieldset legend="Endere&ccedil;o">
+                    <br />
+                    <h:panelGrid columns="4" width="900">
+                        <h:column>
+                            <h:outputLabel value="Rua:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText id="rua" size="40" value="#{pessoaCtrl.pessoa.rua}" />
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel value="Complemento:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText required="false" id="complemento" size="40" />
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel value="N&uacute;mero:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText required="false" id="numero" size="20" />
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel value="Bairro:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText id="bairro" size="40"
+                                         value="#{pessoaCtrl.pessoa.bairro}" />
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel value="CEP:" />
+                        </h:column>
+                        <h:column>
+                            <p:inputText required="false" id="cep" size="20"
+                                         value="#{pessoaCtrl.pessoa.cep}" />
+                        </h:column>
+                    
+                        <h:column>
+
+                        </h:column>
+                        <h:column>
+
+                        </h:column>
+
+                       
+
+                    </h:panelGrid>
+                    <p:separator />
+                    <br></br>
+                    <h:commandButton value="Confirma"
+                                     styleClass="btn btn-primary pull-right"
+                                     action="#{pessoaCtrl.actionGravar}" />
+
+                </p:fieldset>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

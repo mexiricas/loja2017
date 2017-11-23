@@ -1,102 +1,74 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="titulo">Sistema de Pedidos de Venda</ui:insert></title>
+        <h:outputStylesheet library="css" name="sistema.css" />
+        <h:outputScript library="js" name="jquery.maskMoney.js"/>
+    </h:head>
 
+    <h:body>
+        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="loading.gif"/>
+            </f:facet>
+            <f:facet name="complete">
+                <h:outputText value=""/>
+            </f:facet>
+        </p:ajaxStatus>
 
-	<nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"></a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-        <ul class="nav navbar-nav">
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-    		<li class="dropdown mega-dropdown active">
-			    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>				
-				<div class="dropdown-menu mega-dropdown-menu">
-                    <div class="container-fluid">
-    				    <!-- Tab panes -->
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="men">
-                            <ul class="nav-list list-inline">
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png"/><span>Running</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png"/><span>Football</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png"/><span>Soccer</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_MensTraining.png"/><span>Men's Training</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_WomensTraining.png"/><span>Women's Training</span></a></li>
-                            </ul>
-                          </div>
-                          <div class="tab-pane" id="women">
-                            <ul class="nav-list list-inline">
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png"/><span>Running</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png"/><span>Basketball</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png"/><span>Football</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png"/><span>Soccer</span></a></li>                                
-                            </ul>
-                          </div>
-                          <div class="tab-pane" id="kids">
-                            <ul class="nav-list list-inline">
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Running.png"/><span>Running</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png"/><span>Basketball</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png"/><span>Football</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png"/><span>Soccer</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_MensTraining.png"/><span>Men's Training</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_WomensTraining.png"/><span>Women's Training</span></a></li>
-                            </ul>
-                          </div>
-                          <div class="tab-pane" id="sports">
-                            <ul class="nav-list list-inline">                                
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Basketball.png"/><span>Basketball</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Football.png"/><span>Football</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_Soccer.png"/><span>Soccer</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_MensTraining.png"/><span>Men's Training</span></a></li>
-                                <li><a href="#"><img src="http://content.nike.com/content/dam/one-nike/globalAssets/menu_header_images/OneNike_Global_Nav_Icons_WomensTraining.png"/><span>Women's Training</span></a></li>
-                            </ul>
-                          </div>
-                        </div>
-                    </div>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                       <li class="active"><a href="#men" role="tab" data-toggle="tab">Men</a></li>
-                       <li><a href="#women" role="tab" data-toggle="tab">Women</a></li>
-                       <li><a href="#kids" role="tab" data-toggle="tab">Kids</a></li>
-                       <li><a href="#sports" role="tab" data-toggle="tab">Sports</a></li>
-                    </ul>                    
-				</div>				
-			</li>
-        </ul>
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search"/>
+        <header>
+            <div style="float: left">
+                <h:link outcome="/Home">
+                    <h:graphicImage library="images" name="logo-algaworks.png" />
+                </h:link>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-            </li>
-        </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
 
+            <div style="float: right; margin-right: 110px">
+                <span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+                    Olá usuário!
+                </span>
 
+                <h:form style="display: inline-block">
+                    
+                    <p:menubar styleClass="menu-sistema">
+                        <p:menuitem value="Home" outcome="/admin/principal"/>
+                        <p:submenu label="Cadastros">
+                            <p:menuitem value="Clientes" outcome="/admin/lista_pessoa"/>    
+                            <p:separator/>
+                            <p:menuitem value="Lista Produtos" outcome="/admin/lista_produto" />
+                            <p:menuitem value="Cadastrar Produtos" outcome="/admin/inserir_produto" />
+                        </p:submenu>
+                        <p:submenu label="Pedidos">
+                            <p:menuitem value="Novo pedido" outcome="/cliente/principal" />
+                            <p:menuitem value="Formas de Pagamentos" outcome="/admin/lista_formaPgto" />
+                            <p:menuitem value="Pesquisa" outcome="/admin/principal" />
+                        </p:submenu>
+                        <p:menuitem value="Sair" onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"/>
+                    </p:menubar>
+                </h:form>
+            </div>
+            <div style="clear: both"></div>
+        </header>
 
+        <div id="conteudo">
+            <ui:insert name="corpo"/>
+        </div>
+        <script>
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
+            }
+
+            $(document).ready(function () {
+                configurarMoeda();
+            });
+        </script>
+    </h:body>
+
+</html>

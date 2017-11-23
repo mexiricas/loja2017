@@ -10,14 +10,7 @@
 	<ui:define name="principal">
 		<h:form>
 
-			<li><h:commandLink value="Produto" action="lista_produto" /></li>
-			<li><h:commandLink value="Cliente" action="lista_pessoa" /></li>
-			<li><h:commandLink value="Forma de Pagamento"
-					action="lista_formaPgto" /></li>
-			<li><p:commandLink value="Sair" icon="ui-icon-close"
-					onclick="document.location = '#{request.contextPath}/j_spring_security_logout'" />
-			</li>
-
+                    <h:outputLabel styleClass="bg-success" value="Olá Administrador!!!"/>
 		</h:form>
 	</ui:define>
 </ui:composition>

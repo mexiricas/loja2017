@@ -3,7 +3,7 @@ package beans;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "formapgto")
+@Table(name = "forma_pgto")
 public class FormaPgto {
 	
 	@Id

@@ -53,7 +53,7 @@ public class ProdutoCtrl implements Serializable {
 	
 	public String actionInserir() {
 		produto = new Produto();
-		return "/admin/lista_produto";
+		return "/admin/inserir_produto";
 	}
 	
 	public String actionExcluir() {

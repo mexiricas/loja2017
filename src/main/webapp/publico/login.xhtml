@@ -1,44 +1,78 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="principal">
+        <div class="main">
+            <div class="header" >
+                <h1 class="text-primary">SEJAM BEM VINDOS</h1>
+            </div>
+            <p:separator/>
+            <div class="col-md-6">
+                <ul >
+                    <form id="Login"
+                          action="#{request.contextPath}/j_spring_security_check"
+                          method="post">
+                        <h3>Já sou cliente</h3>
+                        <p:separator/>
 
-<h:head>
-	<title>Login</title>
-</h:head>
-<h:body>
-	<h:panelGroup rendered="#{!empty param.login_error}">
-		Erro ao efetuar o login.<br />
-		Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
-	</h:panelGroup>
+                        <li><label>Email: </label>
+                            <p:inputText styleClass="form-control" id="j_username" />
+                            <p:watermark for="j_username" value="Digite seu email"/></li>
+                        <div class="clear"> </div>
+                        <li><label>Senha: </label>
+                            <p:password styleClass="form-control input" id="j_password" />
+                            <p:watermark for="j_password" value="Digite sua senha"/></li>
+                        <li><h4><p:commandLink value="Esqueci minha senha"/></h4></li>
+                        <div class="clear"> </div>
+                        <li><h:commandButton value="ENTRAR E COMPRAR" 
+                                             styleClass="btn btn-primary "/></li>
 
-	<form id="login" method="post"
-		action="#{request.contextPath}/j_spring_security_check">
-		<table>
-			<tr>
-				<td>Login</td>
-				<td><input type='text' name='j_username' /></td>
-			</tr>
-			<tr>
-				<td>Senha</td>
-				<td><input type='password' name='j_password' /></td>
-			</tr>
-			<tr>
-				<td align="right"><input type="checkbox"
-					name="_spring_security_remember_me" /></td>
-				<td>Logar automaticamente</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="Logar" /></td>
-			</tr>
-		</table>
-		<script>
-			document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
-		</script>
-	</form>
-</h:body>
-</html>
+                        <div class="clear"> </div>
+                    </form>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h:form id="form">
+                    <ul >
+                        <h2>Não sou cadastrado</h2>
+                        <p:separator/>
+                        <h3 class="text-danger"><h:outputLabel value="#{pessoaCtrl.filtro}"/></h3>
+                        <li><label>Nome: </label>
+                            <p:inputText styleClass="form-control" id="nome" value="#{pessoaCtrl.pessoa.nome}"/>
+                            <p:watermark for="nome" value="Digite seu email"/></li>
+
+                        <li><label>Email: </label>
+                            <p:inputText styleClass="form-control" id="email" value="#{pessoaCtrl.pessoa.email}"/>
+                            <p:watermark for="email" value="Digite seu email"/></li>
+
+                        <div class="clear"> </div>
+                        <li><label>Senha: </label>
+                            <p:password styleClass="form-control"  id="senha" value="#{pessoaCtrl.pessoa.senha}"/>
+                            <p:watermark for="senha" value="Digite sua senha" /></li>
+
+                        <li><label>Senha: </label>
+                            <p:password styleClass="form-control"  id="senha2" value="#{pessoaCtrl.filtro}">
+                                <p:ajax listener="#{pessoaCtrl.confirmarSenha}" update=":form:senha" />
+                            </p:password><p:watermark for="senha2" value="Digite sua senha"/></li>
+
+                        <li style="margin-left: 20px;"><label class="checkbox"><input type="checkbox" name="checkbox" checked=""/>Mantenha-me informado sobre promoções</label></li>
+                        <li><h:commandButton value="COMPLETAR CADASTRO" action="#{pessoaCtrl.confirmarSenha}"
+                                             styleClass="btn btn-primary col-sm-offset-1"/></li>
+
+                        <div class="clear"> </div>
+                    </ul>
+                </h:form>
+            </div>
+            <div class="clear"> </div>
+        </div>
+    </ui:define>
+</ui:composition>
