@@ -1,14 +1,328 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="/template/layout.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-	<ui:define name="principal">
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="principal">
+        <h:form id="form">
+             <h3>Ambiente 100% Seguro!!!</h3>
+                        <p:separator/>
+            <div class="col-md-5 thumbnail">
+                <f:event listener="#{carrinhoCtrl.verificarStatus()}" type="preRenderView" /> 
+                <p:messages id="msgs" />
+                <h:inputHidden value="#{carrinhoCtrl.pessoa.id}" />
+
+                <legend class="text-muted">Pessoal: </legend>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 100px;"><i
+                                class="fa fa-user fa" aria-hidden="true"></i> <label
+                                for="name" class="control-label"> Nome:</label></span>
+                        <h:inputText id="name" value="#{carrinhoCtrl.pessoa.nome}" readonly="true"
+                                     label="Digite seu nome" styleClass="form-control">
+                            <f:validateLength minimum="2" />
+                        </h:inputText>
 
 
-	</ui:define>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-calendar" aria-hidden="true"></i> <label
+                                for="da" class="cols-sm-2 control-label"> Data
+                                de Nascimento:</label></span>
+                        <h:inputText onfocus=" limpaCampo(this);" id="da" readonly="true"
+                                     styleClass="form-control"
+                                     value="#{carrinhoCtrl.pessoa.data_nasc}" maxlength="10"
+                                     onkeypress="formatarData('##/##/####', this);">
+                            <f:convertDateTime locale="pt_BR" type="date"
+                                               dateStyle="medium" />
+                        </h:inputText>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-envelope fa" aria-hidden="true"></i> <label
+                                class="cols-sm-2 control-label">
+                                Email:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.email}" readonly="true" label="Digite seu email"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-address-card" aria-hidden="true"></i> <label
+                                for="rg" class="cols-sm-2 control-label"> RG:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.rg}" readonly="true"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-address-card" aria-hidden="true"></i> <label
+                                for="cpf" class="cols-sm-2 control-label"> CPF:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.cpf}" readonly="true"
+                                     maxlength="14" onfocus="limpaCampo(this);"
+                                     styleClass="form-control"
+                                     onkeypress="formatarData('###.###.###-##', this);" />
+                    </div>
+                </div>
+
+                <legend class="text-muted" >Contados: </legend>
+                <h:dataTable value="#{carrinhoCtrl.pessoa.fones}" var="fone"
+                             rowClasses="warning, info" columnClasses="success"
+                             rules="rows"
+                             styleClass="table table-condensed table-striped">
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Numero" />
+                        </f:facet>
+                        <p:inputText value="#{fone.numero}" size="10"
+                                     maxlength="14" onkeypress="MascaraTelefone(this);" />
+                    </p:column>
+
+
+                    <p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Descrição" />
+                        </f:facet>
+                        <p:inputText value="#{fone.descricao}" size="10"
+                                     maxlength="30" />
+                    </p:column>
+                    <p:column>
+                        <h:commandButton value="-"
+                                         action="#{pessoaCtrl.actionExcluirFone(fone)}"
+                                         styleClass="btn btn-danger" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:commandButton value="Adicionar Telefone"
+                                             action="#{carrinhoCtrl.actionInserirFoneCliente()}"
+                                             styleClass="btn btn-success" style="font-size: 13px;"/>
+                        </f:facet>
+                        <h:commandButton value="+"
+                                         action="#{carrinhoCtrl.actionInserirFoneCliente()}"
+                                         styleClass="btn btn-success" />
+                    </p:column>
+                </h:dataTable>
+
+
+                <div class="col-md-12 thumbnail" style="margin-top: 20px;">
+
+                    <legend class="text-muted">Resumo Pedido: </legend>
+
+                    <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
+                                columns="2">
+                        <p:panel styleClass="thumbnail">
+                            <h:panelGrid columns="2" style="width:90%">
+                                <f:facet name="header">
+                                    <div class="heading-border b-color-2" style="width: 80px"></div>
+                                    <h:outputLabel value="#{obj_prod.nome}" /><br/>
+                                    <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
+
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:dataGrid>
+                    <div class="well wedget">
+                        <strong>Subtotal: </strong>
+                        <div class="heading-border b-color-2" style="width: 100px;"></div>
+                        <small>Quantidades de Produtos : 
+                            <h:outputLabel  value="#{carrinhoCtrl.qdtTotal}"/></small>
+                        <p>Total : <span>R$<h:outputLabel value="#{carrinhoCtrl.subtotal}"/></span></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5 thumbnail">
+
+                <legend class="text-muted">Endereço: </legend>
+
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-street-view" aria-hidden="true"></i> <label
+                                for="rua" class="cols-sm-2 control-label"> Rua:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.rua}"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-street-view" aria-hidden="true"></i> <label
+                                for="cep" class="cols-sm-2 control-label"> CEP:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.cep}"
+                                     styleClass="form-control" onkeypress="MascaraCep(this);"
+                                     maxlength="10" />
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-street-view" aria-hidden="true"></i> <label
+                                for="bairro" class="cols-sm-2 control-label">
+                                Bairro:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.bairro}"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-street-view" aria-hidden="true"></i> <label
+                                for="uf" class="cols-sm-2 control-label"> UF:</label></span>
+                        <h:selectOneMenu id="estado" styleClass="form-control"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         value="#{pessoaCtrl.estado}">
+                            <f:selectItem 
+                                itemLabel="#{carrinhoCtrl.pessoa.cid.estados.est_nome}" itemValue="#{carrinhoCtrl.pessoa.cid.estados}" />
+                            <f:selectItems value="#{pessoaCtrl.estados}" var="estado"
+                                           itemValue="#{estado}" itemLabel="#{estado.est_sigla}" />
+                            <p:ajax listener="#{pessoaCtrl.popular}"
+                                    update=":form:cidade" />
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-street-view" aria-hidden="true"></i> <label
+                                for="cidade" class="cols-sm-2 control-label">
+                                Cidade:</label></span>
+                        <h:selectOneMenu id="cidade" styleClass="form-control"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         value="#{carrinhoCtrl.pessoa.cid}">
+                            <f:selectItem  itemLabel="#{carrinhoCtrl.pessoa.cid.cid_nome}"
+                                           itemValue="#{carrinhoCtrl.pessoa.cid}" />
+                            <f:selectItems value="#{carrinhoCtrl.cidades}" var="cidade"
+                                           itemValue="#{cidade}" itemLabel="#{cidade.cid_nome}" />
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+
+                <legend class="text-muted">Pagamento: </legend>
+
+
+                <div class="col-md-12 thumbnail">
+                    <ul class="list-inline center-block" style="margin-top: 20px;">
+                        <li><h:graphicImage library="images" name="card-1.png"
+                                            height="30" /></li>
+                        <li><h:graphicImage library="images" name="card-2.png"
+                                            height="30" /></li>
+                        <li><h:graphicImage library="images" name="card-3.png"
+                                            height="30" /></li>
+                        <li><h:graphicImage library="images" name="card-4.png"
+                                            height="30" /></li>
+                        <li><h:graphicImage library="images" name="card-5.png"
+                                            height="30" /></li>
+                    </ul>
+
+
+
+                    <h:selectOneRadio value="#{carrinhoCtrl.formaPgto}" required="true" label="Selecione uma forma de pagamento"
+                                      converter="omnifaces.SelectItemsConverter" 
+                                      layout="pageDirection" styleClass="text-uppercase">
+                        <f:selectItems value="#{carrinhoCtrl.forpgt}" 
+                                       var="pgt" itemValue="#{pgt}" itemLabel="#{pgt.descricao}" />
+                        <p:ajax listener="#{carrinhoCtrl.actionTipodePgt}" 
+                                update="fm,  teste" />
+                    </h:selectOneRadio>
+
+                    <p:panel id="teste" widgetVar="testPanel" closable="true" toggleable="true">
+                        <h3 class="text-muted"> <h:outputLabel  value="#{carrinhoCtrl.msg}"/></h3>
+                        <h:graphicImage library="imagens" name="#{carrinhoCtrl.img_nome}.png"
+                                        height="80" />
+                    </p:panel>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-user fa" aria-hidden="true"></i> <label
+                                for="bairro" class="cols-sm-2 control-label">
+                                Nome do Titular:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.pessoa.nome}"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><i
+                                class="fa fa-address-card" aria-hidden="true"></i> <label
+                                for="bairro" class="cols-sm-2 control-label">
+                                Nº do Cartão:</label></span>
+                        <h:inputText value="#{carrinhoCtrl.msg}" required="true" label="Digite Nº do Cartão"
+                                     styleClass="form-control" />
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><label
+                                for="bairro" class="cols-sm-2 control-label">
+                                Validade:</label></span>
+                        <h:selectOneMenu styleClass="form-control"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         value="#{carrinhoCtrl.validade}">
+                            <f:selectItem  itemValue="01"
+                                           itemLabel="01" />
+                            <f:selectItem  itemValue="02"
+                                           itemLabel="02" />
+                            <f:selectItem  itemValue="03"
+                                           itemLabel="03" />
+
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><label
+                                for="bairro" class="cols-sm-2 control-label">
+                                Ano:</label></span>
+                        <h:selectOneMenu styleClass="form-control"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         value="#{carrinhoCtrl.formaPgto.numMaxParc}">
+                            <f:selectItem  itemValue="2016"
+                                           itemLabel="2016" />
+                            <f:selectItem  itemValue="2017"
+                                           itemLabel="2017" />
+                            <f:selectItem  itemValue="2018"
+                                           itemLabel="2018" />
+                            <f:selectItem  itemValue="2019"
+                                           itemLabel="2019" />
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="min-width: 120px;"><label
+                                for="fm" class="cols-sm-2 control-label"> Parcelas:</label></span>
+                        <h:selectOneMenu id="fm" styleClass="form-control"
+                                         converter="omnifaces.SelectItemsConverter"
+                                         value="#{carrinhoCtrl.formaPgto.numMaxParc}">
+                            <f:selectItem  itemValue="#{carrinhoCtrl.formaPgto.numMaxParc}"
+                                           itemLabel="#{carrinhoCtrl.formaPgto.numMaxParc}" />
+                            <f:selectItems value="#{carrinhoCtrl.lsint}" var="qtd"
+                                           itemValue="#{qtd}" itemLabel="#{qtd.intValue()}" />
+                        </h:selectOneMenu>
+                    </div>
+                </div>
+
+
+                <h:commandButton value="Finalizar Compra"
+                                 action="#{carrinhoCtrl.actionPedido()}"
+                                 styleClass="btn btn-block btn-primary" style="margin-top: 20px;"/>
+
+            </div>
+            <div class="clear"> </div>
+        </h:form>
+    </ui:define>
 </ui:composition>

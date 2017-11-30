@@ -194,6 +194,7 @@ public class PessoaCtrl implements Serializable {
     }
 
     public List<Estados> getEstados() {
+        estados = CidadesDao.listagemSiglaEstados("");
         return estados;
     }
 

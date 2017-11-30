@@ -45,7 +45,6 @@
                     <ul >
                         <h2>Não sou cadastrado</h2>
                         <p:separator/>
-                        <h3 class="text-danger"><h:outputLabel value="#{pessoaCtrl.filtro}"/></h3>
                         <li><label>Nome: </label>
                             <p:inputText styleClass="form-control" id="nome" value="#{pessoaCtrl.pessoa.nome}"/>
                             <p:watermark for="nome" value="Digite seu email"/></li>
@@ -56,14 +55,14 @@
 
                         <div class="clear"> </div>
                         <li><label>Senha: </label>
-                            <p:password styleClass="form-control"  id="senha" value="#{pessoaCtrl.pessoa.senha}"/>
+                            <p:password styleClass="form-control"  id="senha" value="#{pessoaCtrl.pessoa.senha}" required="true"/>
                             <p:watermark for="senha" value="Digite sua senha" /></li>
 
                         <li><label>Senha: </label>
-                            <p:password styleClass="form-control"  id="senha2" value="#{pessoaCtrl.filtro}">
+                            <p:password styleClass="form-control"  id="senha2" value="#{pessoaCtrl.filtro}" required="true">
                                 <p:ajax listener="#{pessoaCtrl.confirmarSenha}" update=":form:senha" />
                             </p:password><p:watermark for="senha2" value="Digite sua senha"/></li>
-
+                        <h3 class="text-danger"><h:outputLabel value="#{pessoaCtrl.filtro}"/></h3>
                         <li style="margin-left: 20px;"><label class="checkbox"><input type="checkbox" name="checkbox" checked=""/>Mantenha-me informado sobre promoções</label></li>
                         <li><h:commandButton value="COMPLETAR CADASTRO" action="#{pessoaCtrl.confirmarSenha}"
                                              styleClass="btn btn-primary col-sm-offset-1"/></li>

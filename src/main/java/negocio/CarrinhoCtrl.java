@@ -11,14 +11,19 @@ import beans.FormaPgto;
 import beans.ItensPedidos;
 import beans.Pedidos;
 import beans.Pessoa;
+import persistencia.PessoaDAO;
 import beans.Produto;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import persistencia.FormaPgtoDAO;
+import persistencia.ItensPedidosDAO;
+import persistencia.PedidoDAO;
 
 /**
  *
@@ -61,9 +66,11 @@ public class CarrinhoCtrl implements Serializable {
     }
 
     public String verificarStatus() {
-        String usu = getUsuarioLogado().toString();
-        if(usu != null){
-            return"/publico/lista_compra?faces-redirect=true";  
+        String usu = getUsuarioLogado();
+        PessoaDAO psDao = new PessoaDAO();
+        this.pessoa = psDao.pesqEmail(usu);
+        if (usu != null) {
+            return "/publico/lista_compra?faces-redirect=true";
         }
         return "/publico/login?faces-redirect=true";
     }
@@ -76,6 +83,37 @@ public class CarrinhoCtrl implements Serializable {
 
         return "/publico/lista_compra?faces-redirect=true";
 
+    }
+
+    public String actionPedido() {
+
+        Date data = new Date(System.currentTimeMillis());
+        Pessoa pes = PessoaDAO.pesqEmail(getUsuarioLogado());
+        ped.setFormaPgto(formaPgto);
+        ped.setPessoa(pes);
+        ped.setPed_dataAutorizacao(data);
+        ped.setPed_dataEmissao(data);
+        ped.setPed_status("ABERTO");
+        ped.setPed_total(subtotal);
+        PedidoDAO.inserir(ped);
+        PessoaDAO.alterar(pessoa);
+
+        for (Produto prod : lsprod) {
+            iten = new ItensPedidos();
+            iten.setProd(prod);
+            iten.setIpe_qtde(qdtTotal);
+            iten.setIpe_subtotal(subtotal);
+            iten.setIpe_valorUnit(prod.getPreco());
+            iten.setProd(prod);
+            iten.setPed(ped);
+            ItensPedidosDAO.inserir(iten);
+        }
+        ped = new Pedidos();
+        pessoa = new Pessoa();
+        iten = new ItensPedidos();
+        lsprod = new ArrayList<>();
+        
+        return "/public/index?faces-redirect=true";
     }
 
     public String getUsuarioLogado() {
@@ -133,6 +171,8 @@ public class CarrinhoCtrl implements Serializable {
     }
 
     public List<FormaPgto> getForpgt() {
+        FormaPgtoDAO fpDao = new FormaPgtoDAO();
+        this.forpgt = fpDao.listagem("");
         return forpgt;
     }
 
