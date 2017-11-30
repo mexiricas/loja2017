@@ -11,36 +11,39 @@
 
     <ui:define name="principal">
         <h:form>
-           
-            <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
-                        columns="2">
-                <p:panel styleClass="thumbnail">
-                    <h:panelGrid columns="2">
-                        <f:facet name="header">
-                            <h:outputLabel value="#{obj_prod.nome}" /><br/>
-                            <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
-                        </f:facet>
-                        <h:column>
-                        <h:commandButton value="+  Adicionar"
-                                         actionListener="#{carrinhoCtrl.inserirProd(obj_prod)}"
-                                         styleClass="btn btn-success"/>
-                        </h:column>
-                        <h:column>
+            <div class="col-md-8">
+                <h3>Produtos adicionados ao carrinho</h3>
+                <p:separator/>
+                <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
+                            columns="2">
+                    <p:panel styleClass="thumbnail">
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{obj_prod.nome}" /><br/>
+                                <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
+                            </f:facet>
+                            <h:column>
+                                <h:commandButton value="+  Adicionar"
+                                                 actionListener="#{carrinhoCtrl.inserirProd(obj_prod)}"
+                                                 styleClass="btn btn-success"/>
+                            </h:column>
+                            <h:column>
 
-                        <h:commandButton value="-   Remover"
-                                         actionListener="#{carrinhoCtrl.actionIntemsRemover(obj_prod)}"
-                                         styleClass="btn btn-default"/>
-                        </h:column>
-                    </h:panelGrid>
+                                <h:commandButton value="-   Remover"
+                                                 actionListener="#{carrinhoCtrl.actionIntemsRemover(obj_prod)}"
+                                                 styleClass="btn btn-default"/>
+                            </h:column>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
 
 
-
-                </p:panel>
-            </p:dataGrid>
-
-
-            <h:form id="forms">
+            </div>
+            <div class="col-md-4">
+                 <h3>Total geral</h3>
+                    <p:separator/>
                 <div class="well wedget">
+                   
                     <strong>Subtotal: </strong>
                     <div class="heading-border b-color-6"></div>
 
@@ -52,18 +55,17 @@
 
                     <small>Quantidades de Produtos : 
                         <h:outputLabel for="forms" value="#{carrinhoCtrl.qdtTotal}"/></small><br/>
-                        <label class="label-info"><p>Total: <span>R$<h:outputLabel value="#{carrinhoCtrl.subtotal}"/></span></p></label><br/>
-                     </div>
-                        
-                        <h:commandButton value="Fechar Compra"
-                                     action="#{carrinhoCtrl.verificarStatus()}"
-                                     styleClass="btn btn-success pull-right"/>
-                     <h:commandButton value="Continuar Comprando"
-                             action="/publico/index?faces-redirect=true"
-                             styleClass="btn btn-danger "/>
-               
-            </h:form>
-          
+                    <label class="label-info"><p>Total: <span>R$<h:outputLabel value="#{carrinhoCtrl.subtotal}"/></span></p></label><br/>
+                </div>
+
+                <h:commandButton value="Fechar Compra"
+                                 action="/publico/login"
+                                 styleClass="btn btn-success btn-xs pull-right" style="margin: 5px;"/>
+                <h:commandButton value="Continuar Comprando"
+                                 action="/publico/index?faces-redirect=true"
+                                 styleClass="btn btn-danger btn-xs pull-right"/>
+            </div>
+            <div style="clear: both"></div>
         </h:form>
     </ui:define>
 </ui:composition>
