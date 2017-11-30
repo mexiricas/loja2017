@@ -96,10 +96,13 @@
                                      maxlength="10" />
 
                         <h:outputLabel value="Data de Nascimento" />
-                        <p:inputText value="#{pessoaCtrl.pessoa.data_nasc}" size="30"
-                                     maxlength="20">
-                            <f:convertDateTime dateStyle="default" />
-                        </p:inputText>
+                        <h:inputText onfocus=" limpaCampo(this);" id="da"
+                                     styleClass="form-control"
+                                     value="#{pessoaCtrl.pessoa.data_nasc}" maxlength="10"
+                                     onkeypress="formatarData('##/##/####', this);">
+                            <f:convertDateTime locale="pt_BR" type="date"
+                                               dateStyle="medium" />
+                        </h:inputText>
 
                         <h:outputLabel value="Rua" />
                         <p:inputText value="#{pessoaCtrl.pessoa.rua}" size="30"

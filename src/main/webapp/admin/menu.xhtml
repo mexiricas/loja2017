@@ -6,69 +6,37 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><ui:insert name="titulo">Sistema de Pedidos de Venda</ui:insert></title>
-        <h:outputStylesheet library="css" name="sistema.css" />
-        <h:outputScript library="js" name="jquery.maskMoney.js"/>
-    </h:head>
-
-    <h:body>
-        <p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
-            <f:facet name="start">
-                <h:graphicImage library="images" name="loading.gif"/>
-            </f:facet>
-            <f:facet name="complete">
-                <h:outputText value=""/>
-            </f:facet>
-        </p:ajaxStatus>
-
-        <header>
-            <div style="float: left">
-                <h:link outcome="/Home">
-                    <h:graphicImage library="images" name="logo-algaworks.png" />
-                </h:link>
-            </div>
-
-            <div style="float: right; margin-right: 110px">
-                <span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
-                    Olá usuário!
-                </span>
-
-                <h:form style="display: inline-block">
-                    
-                    <p:menubar styleClass="menu-sistema">
-                        <p:menuitem value="Home" outcome="/admin/principal"/>
-                        <p:submenu label="Cadastros">
-                            <p:menuitem value="Clientes" outcome="/admin/lista_pessoa"/>    
-                            <p:separator/>
-                            <p:menuitem value="Lista Produtos" outcome="/admin/lista_produto" />
-                            <p:menuitem value="Cadastrar Produtos" outcome="/admin/inserir_produto" />
-                        </p:submenu>
-                        <p:submenu label="Pedidos">
-                            <p:menuitem value="Novo pedido" outcome="/cliente/principal" />
-                            <p:menuitem value="Formas de Pagamentos" outcome="/admin/lista_formaPgto" />
-                            <p:menuitem value="Pesquisa" outcome="/admin/principal" />
-                        </p:submenu>
-                        <p:menuitem value="Sair" onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"/>
-                    </p:menubar>
-                </h:form>
-            </div>
-            <div style="clear: both"></div>
-        </header>
-
-        <div id="conteudo">
-            <ui:insert name="corpo"/>
+    <header>
+        <div style="float: left">
+            <h:link outcome="/Home">
+                <h:graphicImage library="images" name="5.png" width="40"/>
+            </h:link>
         </div>
-        <script>
-            function configurarMoeda() {
-                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: true});
-            }
 
-            $(document).ready(function () {
-                configurarMoeda();
-            });
-        </script>
-    </h:body>
+        <div style="float: right; margin-right: 110px">
+            <span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+                Olá usuário!
+            </span>
 
+            <h:form style="display: inline-block">
+
+                <p:menubar styleClass="menu-sistema">
+                    <p:menuitem value="Home" outcome="/admin/principal"/>
+                    <p:submenu label="Cadastros">
+                        <p:menuitem value="Clientes" outcome="/admin/lista_pessoa"/>    
+                        <p:separator/>
+                        <p:menuitem value="Lista Produtos" outcome="/admin/lista_produto" />
+                        <p:menuitem value="Cadastrar Produtos" outcome="/admin/inserir_produto" />
+                    </p:submenu>
+                    <p:submenu label="Pedidos">
+                        <p:menuitem value="Novo pedido" outcome="/cliente/finalizar_compra" />
+                        <p:menuitem value="Formas de Pagamentos" outcome="/admin/lista_formaPgto" />
+                        <p:menuitem value="Pesquisa" outcome="/admin/principal" />
+                    </p:submenu>
+                    <p:menuitem value="Sair" onclick="document.location = '#{request.contextPath}/j_spring_security_logout'"/>
+                </p:menubar>
+            </h:form>
+        </div>
+        <div style="clear: both"></div>
+    </header>
 </html>

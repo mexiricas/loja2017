@@ -105,19 +105,11 @@ public class PessoaCtrl implements Serializable {
         return "/publico/cadastro_cliente?faces-redirect=true";
     }
 
-    public String actionAlterar(Pessoa p) {
-        if (p.getTipo().equalsIgnoreCase("ROLE_CLIENTE")) {
+    public void actionAlterar(Pessoa p) {
             this.pessoa = p;
             estado = CidadesDao.est(9);
             estados = CidadesDao.listar("est_nome");
-            cidades = new ArrayList<Cidades>();
-            return "/publico/cadastro_cliente?faces-redirect=true";
-        }
-        this.pessoa = p;
-        estado = CidadesDao.est(9);
-        estados = CidadesDao.listar("est_nome");
-        cidades = new ArrayList<Cidades>();
-        return "/admin/lista_pessoa?faces-redirect=true";
+            cidades = new ArrayList<Cidades>();     
     }
 
     public String actionExcluir() {
@@ -185,6 +177,7 @@ public class PessoaCtrl implements Serializable {
     }
 
     public List<Cidades> getCidades() {
+        cidades = new ArrayList<Cidades>();  
         return cidades;
     }
 

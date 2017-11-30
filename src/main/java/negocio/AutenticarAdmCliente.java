@@ -67,7 +67,7 @@ public class AutenticarAdmCliente implements AuthenticationSuccessHandler {
 			}
 		}
 		if (isCommon) {
-			return "/publico/index.xhtml";
+			return "/cliente/finalizar_compra.xhtml";
 		} else if (isAdmin) {
 			return "/admin/principal.xhtml";
 		} else {
