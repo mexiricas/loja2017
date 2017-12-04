@@ -74,6 +74,5 @@ public class FormaPgto {
 	public void setPercentualAcres(float percentualAcres) {
 		this.percentualAcres = percentualAcres;
 	}
-	
-	
+
 }	

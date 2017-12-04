@@ -117,6 +117,7 @@ public class CarrinhoCtrl implements Serializable {
     }
 
     public String actionTipodePgt() {
+        System.out.println("passou");
         if (formaPgto.getDescricao().contains("BOLETO")) {
             msg = "Ao final da compra você será apresentado ao boleto "
                     + "de pagamento. "

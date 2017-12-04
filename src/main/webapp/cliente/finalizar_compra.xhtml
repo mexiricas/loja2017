@@ -172,17 +172,17 @@
                     <li><h:graphicImage library="images" name="card-5.png"
                                         height="30" /></li>
                 </ul>
-
-
-
-                <h:selectOneRadio value="#{carrinhoCtrl.formaPgto}" required="true" label="Selecione uma forma de pagamento"
-                                  converter="omnifaces.SelectItemsConverter" 
-                                  layout="pageDirection" styleClass="text-uppercase">
-                    <f:selectItems value="#{carrinhoCtrl.forpgt}" 
-                                   var="pgt" itemValue="#{pgt}" itemLabel="#{pgt.descricao}" />
-                    <p:ajax listener="#{carrinhoCtrl.actionTipodePgt}" 
-                            update="fm,teste" />
-                </h:selectOneRadio>
+               
+                <h:outputLabel value="Selecione uma forma de Pagamento " />
+               
+                <p:selectOneRadio value="#{carrinhoCtrl.formaPgto}" 
+                                              converter="omnifaces.SelectItemsConverter" 
+                                              layout="pageDirection" styleClass="text-uppercase">
+                                <f:selectItems value="#{carrinhoCtrl.forpgt}" 
+                                               var="pgt" itemValue="#{pgt}" itemLabel="#{pgt.descricao}" />
+                                <p:ajax listener="#{carrinhoCtrl.actionTipodePgt}" 
+                                        update="fm,  teste" />
+                </p:selectOneRadio>
 
                 <p:panel id="teste" widgetVar="testPanel" closable="true" toggleable="true">
                     <h3 class="text-muted"> <h:outputLabel  value="#{carrinhoCtrl.msg}"/></h3>
