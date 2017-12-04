@@ -12,6 +12,7 @@
             <h3>Ambiente 100% Seguro!!!</h3>
             <p:separator/>
             <f:event listener="#{carrinhoCtrl.verificarStatus()}" type="preRenderView" />
+            <p:messages id="msgs" />
             <p:panel header="Altera&ccedil;&atilde;o de Usu&aacute;rios">
                 <br />
                 <p:fieldset legend="Dados cadastrais">
@@ -188,52 +189,52 @@
 
                 </p:panel>
             </div>
-            <h:outputLabel value="Nome do Titular:"/>
-            <h:inputText value="#{carrinhoCtrl.pessoa.nome}"
-                         />
-            <h:outputLabel value=" Nº do Cartão:"/>
-            <h:inputText value="#{carrinhoCtrl.msg}" required="true" label="Digite Nº do Cartão"
-                         />
-            <h:outputLabel value=" Validade:"/>
-            <h:selectOneMenu 
-                converter="omnifaces.SelectItemsConverter"
-                value="#{carrinhoCtrl.validade}">
-                <f:selectItem  itemValue="01"
-                               itemLabel="01" />
-                <f:selectItem  itemValue="02"
-                               itemLabel="02" />
-                <f:selectItem  itemValue="03"
-                               itemLabel="03" />
+            <p:panel header="Dados do Cartão">
+                <h:outputLabel value="Nome do Titular:"/>
+                <h:inputText value="#{carrinhoCtrl.pessoa.nome}"
+                             />
+                <h:outputLabel value=" Nº do Cartão:"/>
+                <h:inputText value="#{carrinhoCtrl.msg}" required="true" label="Digite Nº do Cartão"
+                             />
+                <h:outputLabel value=" Validade:"/>
+                <h:selectOneMenu 
+                    converter="omnifaces.SelectItemsConverter"
+                    value="#{carrinhoCtrl.validade}">
+                    <f:selectItem  itemValue="01"
+                                   itemLabel="01" />
+                    <f:selectItem  itemValue="02"
+                                   itemLabel="02" />
+                    <f:selectItem  itemValue="03"
+                                   itemLabel="03" />
 
-            </h:selectOneMenu>
-            <h:outputLabel value="Ano:"/>
-            <h:selectOneMenu 
-                converter="omnifaces.SelectItemsConverter"
-                value="#{carrinhoCtrl.formaPgto.numMaxParc}">
-                <f:selectItem  itemValue="2016"
-                               itemLabel="2016" />
-                <f:selectItem  itemValue="2017"
-                               itemLabel="2017" />
-                <f:selectItem  itemValue="2018"
-                               itemLabel="2018" />
-                <f:selectItem  itemValue="2019"
-                               itemLabel="2019" />
-            </h:selectOneMenu>
-            <label for="fm" class="cols-sm-2 control-label"> Parcelas:</label>
-            <h:selectOneMenu id="fm" 
-                             converter="omnifaces.SelectItemsConverter"
-                             value="#{carrinhoCtrl.formaPgto.numMaxParc}">
-                <f:selectItem  itemValue="#{carrinhoCtrl.formaPgto.numMaxParc}"
-                               itemLabel="#{carrinhoCtrl.formaPgto.numMaxParc}" />
-                <f:selectItems value="#{carrinhoCtrl.lsint}" var="qtd"
-                               itemValue="#{qtd}" itemLabel="#{qtd.intValue()}" />
-            </h:selectOneMenu>
-
+                </h:selectOneMenu>
+                <h:outputLabel value="Ano:"/>
+                <h:selectOneMenu 
+                    converter="omnifaces.SelectItemsConverter"
+                    value="#{carrinhoCtrl.formaPgto.numMaxParc}">
+                    <f:selectItem  itemValue="2016"
+                                   itemLabel="2016" />
+                    <f:selectItem  itemValue="2017"
+                                   itemLabel="2017" />
+                    <f:selectItem  itemValue="2018"
+                                   itemLabel="2018" />
+                    <f:selectItem  itemValue="2019"
+                                   itemLabel="2019" />
+                </h:selectOneMenu>
+                <label for="fm" class="cols-sm-2 control-label"> Parcelas:</label>
+                <h:selectOneMenu id="fm" 
+                                 converter="omnifaces.SelectItemsConverter"
+                                 value="#{carrinhoCtrl.formaPgto.numMaxParc}">
+                    <f:selectItem  itemValue="#{carrinhoCtrl.formaPgto.numMaxParc}"
+                                   itemLabel="#{carrinhoCtrl.formaPgto.numMaxParc}" />
+                    <f:selectItems value="#{carrinhoCtrl.lsint}" var="qtd"
+                                   itemValue="#{qtd}" itemLabel="#{qtd.intValue()}" />
+                </h:selectOneMenu>
+            </p:panel>
 
             <h:commandButton value="Finalizar Compra"
                              action="#{carrinhoCtrl.actionPedido()}"
                              styleClass="btn btn-block btn-primary" style="margin-top: 20px;"/>
-
         </h:form>
         <div class="clear"> </div>
 
