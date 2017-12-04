@@ -112,8 +112,34 @@ public class CarrinhoCtrl implements Serializable {
         pessoa = new Pessoa();
         iten = new ItensPedidos();
         lsprod = new ArrayList<>();
-        
+
         return "/public/index?faces-redirect=true";
+    }
+
+    public String actionTipodePgt() {
+        if (formaPgto.getDescricao().contains("BOLETO")) {
+            msg = "Ao final da compra você será apresentado ao boleto "
+                    + "de pagamento. "
+                    + "Imprima-o e efetue o pagamento "
+                    + "em qualquer banco para seu pedido ser aprovado.";
+
+            img_nome = "codbarras222";
+            actionQtdParcelas();
+        } else {
+            msg = "";
+            img_nome = "";
+            actionQtdParcelas();
+        }
+        return "/public/form_cliente?faces-redirect=true";
+    }
+
+    public List<Integer> actionQtdParcelas() {
+        lsint = new ArrayList<>();
+        int num = formaPgto.getNumMaxParc();
+        for (int i = 0; i < num; i++) {
+            lsint.add(i);
+        }
+        return lsint;
     }
 
     public String getUsuarioLogado() {
