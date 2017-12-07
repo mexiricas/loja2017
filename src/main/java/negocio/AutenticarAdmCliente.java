@@ -20,7 +20,7 @@ import org.springframework.security.web.WebAttributes;
 
 public class AutenticarAdmCliente implements AuthenticationSuccessHandler {
 
-	Session sessao1 = HibernateUtil.getSessionFactory().openSession();
+	Session sessao = HibernateUtil.getSessionFactory().openSession();
 	protected final Log logger = LogFactory.getLog(this.getClass());
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 

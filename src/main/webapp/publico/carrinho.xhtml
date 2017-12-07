@@ -20,7 +20,9 @@
                         <h:panelGrid columns="2">
                             <f:facet name="header">
                                 <h:outputLabel value="#{obj_prod.nome}" /><br/>
-                                <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
+                                <strong>R$<p:outputLabel id="preco" value="#{obj_prod.preco}">
+                                        <f:convertNumber pattern="#0.00"/>
+                                    </p:outputLabel></strong>
                             </f:facet>
                             <h:column>
                                 <h:commandButton value="+  Adicionar"
@@ -40,10 +42,10 @@
 
             </div>
             <div class="col-md-4">
-                 <h3>Total geral</h3>
-                    <p:separator/>
+                <h3>Total geral</h3>
+                <p:separator/>
                 <div class="well wedget">
-                   
+
                     <strong>Subtotal: </strong>
                     <div class="heading-border b-color-6"></div>
 

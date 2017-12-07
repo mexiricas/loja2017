@@ -29,5 +29,7 @@
 		<mapping class="beans.Estados" />
 		<mapping class="beans.Fone" />
 		<mapping class="beans.FormaPgto" />
+                <mapping class="beans.ItensPedidos" />
+		<mapping class="beans.Pedidos" />
 	</session-factory>
 </hibernate-configuration>	

@@ -69,6 +69,7 @@ public class PessoaDAO implements Serializable {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         Query consulta = sessao.createQuery("from Pessoa where pes_email = :parametro");
         consulta.setString("parametro", filtro);
+        sessao.close();
         return (Pessoa) consulta.uniqueResult();
 
     }

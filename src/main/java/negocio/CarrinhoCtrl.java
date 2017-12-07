@@ -41,7 +41,7 @@ public class CarrinhoCtrl implements Serializable {
     private ItensPedidos iten = new ItensPedidos();
 
     private List<Produto> lsprod = new ArrayList<>();
-    private List<FormaPgto> forpgt;
+    private List<FormaPgto> lsfpgt;
     private List<Integer> lsint = new ArrayList<>();
     private List<Cidades> cidades;
     private List<Estados> estados;
@@ -66,6 +66,8 @@ public class CarrinhoCtrl implements Serializable {
     }
 
     public String verificarStatus() {
+        FormaPgtoDAO fpDao = new FormaPgtoDAO();
+        this.lsfpgt = fpDao.listagem("");
         String usu = getUsuarioLogado();
         PessoaDAO psDao = new PessoaDAO();
         this.pessoa = psDao.pesqEmail(usu);
@@ -100,7 +102,6 @@ public class CarrinhoCtrl implements Serializable {
 
         for (Produto prod : lsprod) {
             iten = new ItensPedidos();
-            iten.setProd(prod);
             iten.setIpe_qtde(qdtTotal);
             iten.setIpe_subtotal(subtotal);
             iten.setIpe_valorUnit(prod.getPreco());
@@ -116,8 +117,9 @@ public class CarrinhoCtrl implements Serializable {
         return "/public/index?faces-redirect=true";
     }
 
-    public String actionTipodePgt() {
+    public String actionTipodePgt(FormaPgto fpt) {
         System.out.println("passou");
+        this.formaPgto = fpt;
         if (formaPgto.getDescricao().contains("BOLETO")) {
             msg = "Ao final da compra você será apresentado ao boleto "
                     + "de pagamento. "
@@ -197,14 +199,12 @@ public class CarrinhoCtrl implements Serializable {
         this.lsprod = lsprod;
     }
 
-    public List<FormaPgto> getForpgt() {
-        FormaPgtoDAO fpDao = new FormaPgtoDAO();
-        this.forpgt = fpDao.listagem("");
-        return forpgt;
+    public List<FormaPgto> getLsfpgt() {
+        return lsfpgt;
     }
 
-    public void setForpgt(List<FormaPgto> forpgt) {
-        this.forpgt = forpgt;
+    public void setLsfpgt(List<FormaPgto> lsfpgt) {
+        this.lsfpgt = lsfpgt;
     }
 
     public List<Integer> getLsint() {

@@ -155,11 +155,31 @@
                     <br></br>
                 </p:fieldset>
             </p:panel>
-            <p:separator/>
+             <p:separator/>
+             <div class="col-md-12">
+                <h3>Produtos adicionados ao carrinho</h3>
+                
+                <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
+                            columns="2">
+                    <p:panel styleClass="thumbnail">
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{obj_prod.nome}" /><br/>
+                                <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
+                            </f:facet>
+                        
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
+
+
+            </div>
+           
+            <div class="col-md-12">
+                 <p:separator/>
             <legend class="text-muted">Pagamento: </legend>
 
 
-            <div class="col-md-12 thumbnail">
                 <ul class="list-inline center-block" style="margin-top: 20px;">
                     <li><h:graphicImage library="images" name="card-1.png"
                                         height="30" /></li>
@@ -178,9 +198,10 @@
                 <p:selectOneRadio value="#{carrinhoCtrl.formaPgto}" 
                                               converter="omnifaces.SelectItemsConverter" 
                                               layout="pageDirection" styleClass="text-uppercase">
-                                <f:selectItems value="#{carrinhoCtrl.forpgt}" 
+                    
+                    <f:selectItems value="#{carrinhoCtrl.lsfpgt}" 
                                                var="pgt" itemValue="#{pgt}" itemLabel="#{pgt.descricao}" />
-                                <p:ajax listener="#{carrinhoCtrl.actionTipodePgt}" 
+                                <p:ajax listener="#{carrinhoCtrl.actionTipodePgt(pgt)}" 
                                         update="fm,  teste" />
                 </p:selectOneRadio>
 
