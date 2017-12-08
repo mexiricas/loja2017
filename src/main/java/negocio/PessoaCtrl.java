@@ -66,7 +66,7 @@ public class PessoaCtrl implements Serializable {
                     "Alterado com sucesso!"));
 
         }
-        return "/admin/lista_pessoa";
+        return "/publico/index";
     }
 
     public String actionGravarAdm() {

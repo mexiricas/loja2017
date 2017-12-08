@@ -79,7 +79,7 @@ public class ItensPedidos {
     }
 
     @ManyToOne
-    @JoinColumn(name = "prod_id")
+    @JoinColumn(name = "pro_id")
     Produto prod = new Produto();
 
     public Produto getProd() {

@@ -8,34 +8,36 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pm="http://primefaces.org/mobile"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <ui:define name="principal">
 
         <h:form id="form">
             <p:panel header="Loja Virtual">
-                
-                 <p:dataGrid value="#{produtoCtrl.listagem}" var="obj_prod"
-                                    columns="4">
-                            <p:panel styleClass="thumbnail">
-                                <h:panelGrid columns="2" style="width:90%">
-                                    <f:facet name="header">
-                                        <div class="heading-border b-color-2" style="width: 80px"></div>
-                                        <img src="../resources/imagens/lojas.png" width="60"/>
-                                       
-                                        <h:outputLabel value="#{obj_prod.nome}" /><br/>
-                                        <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
 
-                                    </f:facet>
-                                    <h:commandButton value="COMPRAR"
-                                                     action="#{carrinhoCtrl.inserirProd(obj_prod)}"
-                                                     styleClass="btn btn-default"/>
-                                    <span class="pull-right"><i class="fa fa-heart-o"></i>
-                                        Favorito</span>
-                                </h:panelGrid>
-                            </p:panel>
+                <p:dataGrid value="#{produtoCtrl.listagem}" var="obj_prod"
+                            columns="4">
+                    <p:panel styleClass="thumbnail">
+                        <h:panelGrid columns="2" style="width:90%">
+                            <f:facet name="header">
+                                <div class="heading-border b-color-2" style="width: 80px"></div>
+                                <img src="../resources/imagens/lojas.png" width="60"/>
 
-                        </p:dataGrid>
-                
+                                <h:outputLabel value="#{obj_prod.nome}" /><br/>
+                                <strong>R$<p:outputLabel id="preco" value="#{obj_prod.preco}">
+                                        <f:convertNumber pattern="#0.00"/>
+                                    </p:outputLabel></strong>
+
+                            </f:facet>
+                            <h:commandButton value="COMPRAR"
+                                             action="#{carrinhoCtrl.inserirProd(obj_prod)}"
+                                             styleClass="btn btn-default"/>
+                            <span class="pull-right"><i class="fa fa-heart-o"></i>
+                                Favorito</span>
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataGrid>
+
             </p:panel>
         </h:form>
     </ui:define>

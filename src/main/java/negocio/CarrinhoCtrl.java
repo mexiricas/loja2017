@@ -41,6 +41,7 @@ public class CarrinhoCtrl implements Serializable {
     private ItensPedidos iten = new ItensPedidos();
 
     private List<Produto> lsprod = new ArrayList<>();
+    private List<Produto> lstela = new ArrayList<>();
     private List<FormaPgto> lsfpgt;
     private List<Integer> lsint = new ArrayList<>();
     private List<Cidades> cidades;
@@ -51,18 +52,37 @@ public class CarrinhoCtrl implements Serializable {
     private int qdtTotal = 0;
     private int validade = 0;
     private float subtotal = 0;
+    private float subtotalItem = 0;
+    private int qtdItem = 0;
     private String msg = "";
     private float somaDosProdutos = 0;
 
     public String inserirProd(Produto p) {
+        if (lsprod.isEmpty()) {
+            lstela.add(p);
+        } else {
+            if (!contem(p)) {
+                lstela.add(p);
+            }
 
+        }
         somaDosProdutos = somaDosProdutos + p.getPreco();
         lsprod.add(p);
+
         this.qdtTotal = lsprod.size();
         this.subtotal = somaDosProdutos;
         prod = p;
 
         return "/publico/carrinho?faces-redirect=true";
+    }
+
+    public boolean contem(Produto p) {
+        for (Produto pr : lsprod) {
+            if (p.getNome().equalsIgnoreCase(pr.getNome())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String verificarStatus() {
@@ -71,10 +91,7 @@ public class CarrinhoCtrl implements Serializable {
         String usu = getUsuarioLogado();
         PessoaDAO psDao = new PessoaDAO();
         this.pessoa = psDao.pesqEmail(usu);
-        if (usu != null) {
-            return "/publico/lista_compra?faces-redirect=true";
-        }
-        return "/publico/login?faces-redirect=true";
+        return null;
     }
 
     public String actionIntemsRemover(Produto p) {
@@ -117,13 +134,11 @@ public class CarrinhoCtrl implements Serializable {
         return "/public/index?faces-redirect=true";
     }
 
-    public String actionTipodePgt(FormaPgto fpt) {
+    public void actionTipodePgt() {
         System.out.println("passou");
-        this.formaPgto = fpt;
         if (formaPgto.getDescricao().contains("BOLETO")) {
             msg = "Ao final da compra você será apresentado ao boleto "
-                    + "de pagamento. "
-                    + "Imprima-o e efetue o pagamento "
+                    + "de pagamento. " + "Imprima-o e efetue o pagamento "
                     + "em qualquer banco para seu pedido ser aprovado.";
 
             img_nome = "codbarras222";
@@ -133,24 +148,24 @@ public class CarrinhoCtrl implements Serializable {
             img_nome = "";
             actionQtdParcelas();
         }
-        return "/public/form_cliente?faces-redirect=true";
+
     }
 
-    public List<Integer> actionQtdParcelas() {
+    public void actionQtdParcelas() {
         lsint = new ArrayList<>();
         int num = formaPgto.getNumMaxParc();
-        for (int i = 0; i < num; i++) {
+        for (int i = 1; i < num + 1; i++) {
             lsint.add(i);
         }
-        return lsint;
     }
 
     public String getUsuarioLogado() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
         return userDetails.getUsername();
     }
 
-    //GETTER E SETTERS
+    // GETTER E SETTERS
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -285,6 +300,31 @@ public class CarrinhoCtrl implements Serializable {
 
     public void setSomaDosProdutos(float somaDosProdutos) {
         this.somaDosProdutos = somaDosProdutos;
+    }
+
+    public List<Produto> getLstela() {
+
+        return lstela;
+    }
+
+    public void setLstela(List<Produto> lstela) {
+        this.lstela = lstela;
+    }
+
+    public float getSubtotalItem() {
+        return subtotalItem;
+    }
+
+    public void setSubtotalItem(float subtotalItem) {
+        this.subtotalItem = subtotalItem;
+    }
+
+    public int getQtdItem() {
+        return qtdItem;
+    }
+
+    public void setQtdItem(int qtdItem) {
+        this.qtdItem = qtdItem;
     }
 
 }

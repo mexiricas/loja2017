@@ -15,62 +15,95 @@ public class PessoaDAO implements Serializable {
 
     public static void inserir(Pessoa pessoa) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Transaction t = sessao.beginTransaction();
-        sessao.save(pessoa);
-        t.commit();
-        sessao.close();
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.save(pessoa);
+            t.commit();
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
+        }
 
     }
 
     public static void alterar(Pessoa pessoa) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Transaction t = sessao.beginTransaction();
-        sessao.update(pessoa);
-        t.commit();
-        sessao.close();
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.update(pessoa);
+            t.commit();
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
+        }
 
     }
 
     public static void excluir(Pessoa pessoa) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Transaction t = sessao.beginTransaction();
-        sessao.delete(pessoa);
-        t.commit();
-        sessao.close();
+        try {
+            Transaction t = sessao.beginTransaction();
+            sessao.delete(pessoa);
+            t.commit();
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
+        }
 
     }
 
     public static List<Pessoa> listagem(String filtro) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Query consulta;
-        List<Pessoa> lista = null;
-        if (filtro.trim().length() == 0) {
-            consulta = sessao.createQuery("from Pessoa order by pes_id");
+        try {
+            Query consulta;
+            List<Pessoa> lista = null;
+            if (filtro.trim().length() == 0) {
+                consulta = sessao.createQuery("from Pessoa order by pes_id");
 
-        } else {
-            consulta = sessao.createQuery("from Pessoa "
-                    + "where pes_nome like :parametro order by pes_id");
-            consulta.setString("parametro", "%" + filtro + "%");
+            } else {
+                consulta = sessao.createQuery("from Pessoa "
+                        + "where pes_nome like :parametro order by pes_id");
+                consulta.setString("parametro", "%" + filtro + "%");
+            }
+            lista = consulta.list();
+
+            return lista;
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
         }
-        lista = consulta.list();
-        sessao.close();
-        return lista;
     }
 
     public static Pessoa pesqId(int valor) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Query consulta = sessao.createQuery("from Pessoa where pes_id = :parametro");
-        consulta.setInteger("parametro", valor);
-        sessao.close();
-        return (Pessoa) consulta.uniqueResult();
+        try {
+            Query consulta = sessao.createQuery("from Pessoa where pes_id = :parametro");
+            consulta.setInteger("parametro", valor);
+
+            return (Pessoa) consulta.uniqueResult();
+
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
+        }
     }
 
     public static Pessoa pesqEmail(String filtro) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
-        Query consulta = sessao.createQuery("from Pessoa where pes_email = :parametro");
-        consulta.setString("parametro", filtro);
-        sessao.close();
-        return (Pessoa) consulta.uniqueResult();
+        try {
+            Query consulta = sessao.createQuery("from Pessoa where pes_email = :parametro");
+            consulta.setString("parametro", filtro);
+            return (Pessoa) consulta.uniqueResult();
+        } catch (RuntimeException erro) {
+            throw erro;
+        } finally {
+            sessao.close();
+        }
 
     }
 }

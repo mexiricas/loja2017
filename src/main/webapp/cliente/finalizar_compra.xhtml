@@ -10,100 +10,87 @@
     <ui:define name="principal">
         <h:form id="form">
             <h3>Ambiente 100% Seguro!!!</h3>
-            <p:separator/>
-            <f:event listener="#{carrinhoCtrl.verificarStatus()}" type="preRenderView" />
+            <p:separator />
+            <f:event listener="#{carrinhoCtrl.verificarStatus}"
+                     type="preRenderView" />
             <p:messages id="msgs" />
             <p:panel header="Altera&ccedil;&atilde;o de Usu&aacute;rios">
                 <br />
                 <p:fieldset legend="Dados cadastrais">
                     <br />
-                    <h:panelGrid columns="4" width="900">
+                    <h:panelGrid columns="3" width="900">
+
                         <h:column>
-                            <h:outputLabel value="Nome:" />
+                            <div class="input-group">
+                                <span class="input-group-addon" style="min-width: 100px;"><i
+                                        class="fa fa-user fa" aria-hidden="true"></i> <label
+                                        class="control-label"> Nome:</label></span>
+                                <h:inputText  value="#{carrinhoCtrl.pessoa.nome}" readonly="true"
+                                              label="Digite seu nome" styleClass="form-control">
+                                    <f:validateLength minimum="2" />
+                                </h:inputText>
+
+
+                            </div>
                         </h:column>
                         <h:column>
-                            <p:inputText id="nome" size="40"
-                                         value="#{carrinhoCtrl.pessoa.nome}" />
                         </h:column>
                         <h:column>
-                            <h:outputLabel value="E-mail:" />
-                        </h:column>
-                        <h:column>
-                            <p:inputText id="email" size="40"
-                                         value="#{carrinhoCtrl.pessoa.email}" />
+                            <div class="input-group">
+                                <span class="input-group-addon" style="min-width: 100px;"><i
+                                        class="fa fa-user fa" aria-hidden="true"></i> <label
+                                        class="control-label"> Email:</label></span>
+                                <h:inputText  value="#{carrinhoCtrl.pessoa.email}" readonly="true"
+                                              label="Digite seu nome" styleClass="form-control">
+                                    <f:validateLength minimum="2" />
+                                </h:inputText>
+
+
+                            </div>
                         </h:column>
 
                         <h:column>
-                            <h:outputLabel value="CPF:" />
+                            <div class="input-group">
+                                <span class="input-group-addon" style="min-width: 100px;"><i
+                                        class="fa fa-user fa" aria-hidden="true"></i> <label
+                                        class="control-label"> CPF:</label></span>
+                                <h:inputText  value="#{carrinhoCtrl.pessoa.cpf}" readonly="true"
+                                              label="Digite seu nome" styleClass="form-control">
+                                    <f:validateLength minimum="2" />
+                                </h:inputText>
+
+
+                            </div>
                         </h:column>
+                        <h:column/>
 
                         <h:column>
-                            <p:inputText id="cpfcnpj" size="20"
-                                         value="#{carrinhoCtrl.pessoa.cpf}" />
+                            <div class="input-group">
+                                <span class="input-group-addon" style="min-width: 100px;"><i
+                                        class="fa fa-user fa" aria-hidden="true"></i> <label
+                                        class="control-label"> Data de Nasc:</label></span>
+                                <h:inputText id="da" value="#{carrinhoCtrl.pessoa.data_nasc}" readonly="true"
+                                             maxlength="10" onkeypress="formatarData('##/##/####', this);" styleClass="form-control">
+                                    <f:convertDateTime locale="pt_BR" type="date" dateStyle="medium" />
+                                </h:inputText>
+                            </div>
                         </h:column>
+                        <h:column>
+                            <div class="input-group">
+                                <span class="input-group-addon" style="min-width: 100px;"><i
+                                        class="fa fa-user fa" aria-hidden="true"></i> <label
+                                        class="control-label"> RG:</label></span>
+                                <h:inputText  value="#{carrinhoCtrl.pessoa.rg}" readonly="true"
+                                              label="Digite seu nome" styleClass="form-control">
+                                    <f:validateLength minimum="2" />
+                                </h:inputText>
 
-                        <h:column>
-                            <h:outputLabel value="RG:" />    
-                        </h:column>   
-                        <h:column>
-                            <p:inputText id="rg" size="20" value="#{carrinhoCtrl.pessoa.rg}" />
-                        </h:column>
 
-                        <h:column>  
-                            <h:outputLabel value="Data de Nascimento:" />
-                        </h:column>
-                        <h:column>
-                            <p:inputText  id="da" 
-                                          value="#{carrinhoCtrl.pessoa.data_nasc}" maxlength="10"
-                                          onkeypress="formatarData('##/##/####', this);">
-                                <f:convertDateTime locale="pt_BR" type="date" dateStyle="medium" />
-                            </p:inputText>
-                        </h:column>
-                        <h:column>
-                            <h:outputLabel value="Status:" />
-                        </h:column>
-
-                        <h:column>
-                            <h:selectOneRadio id="status">
-                                <f:selectItem itemLabel="Ativo" itemValue="AT" />
-                                <f:selectItem itemLabel="Inativo" itemValue="IN" />
-                            </h:selectOneRadio>
+                            </div>
                         </h:column>
                         <br />
                     </h:panelGrid>
-
                 </p:fieldset>
-                <p:panel header="CONTATOS">
-                    <br />
-                    <h:panelGrid columns="4" width="900">
-                        <h:dataTable value="#{carrinhoCtrl.pessoa.fones}" var="fone"
-                                     rules="rows">
-                            <f:facet name="header">
-                                <h:commandButton value="Adicionar Fone"
-                                                 action="#{carrinhoCtrl.actionInserirFoneCliente}" />
-                            </f:facet>
-
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputLabel value="Número" />
-                                </f:facet>
-                                <h:inputText value="#{fone.numero}" size="20" maxlength="20" />
-                            </h:column>
-
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputLabel value="Descrição" />
-                                </f:facet>
-                                <h:inputText value="#{fone.descricao}" size="30" maxlength="30" />
-                            </h:column>
-                            <h:column>
-                                <h:commandLink value="Remover"
-                                               action="#{carrinhoCtrl.actionExcluirFoneCliente(fone)}" />
-                            </h:column>
-
-                        </h:dataTable>
-                    </h:panelGrid>
-                </p:panel>
                 <br />
                 <p:fieldset legend="Endere&ccedil;o">
                     <br />
@@ -112,7 +99,8 @@
                             <h:outputLabel value="Rua:" />
                         </h:column>
                         <h:column>
-                            <p:inputText id="rua" size="40" value="#{carrinhoCtrl.pessoa.rua}" />
+                            <p:inputText id="rua" size="40"
+                                         value="#{carrinhoCtrl.pessoa.rua}" />
                         </h:column>
                         <h:column>
                             <h:outputLabel value="Complemento:" />
@@ -155,99 +143,82 @@
                     <br></br>
                 </p:fieldset>
             </p:panel>
-             <p:separator/>
-             <div class="col-md-12">
+            <p:separator />
+            <div class="col-md-12">
                 <h3>Produtos adicionados ao carrinho</h3>
-                
+
                 <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
                             columns="2">
                     <p:panel styleClass="thumbnail">
                         <h:panelGrid columns="2">
                             <f:facet name="header">
-                                <h:outputLabel value="#{obj_prod.nome}" /><br/>
-                                <strong>R$<h:outputLabel value="#{obj_prod.preco}" /></strong>
+                                <h:outputLabel value="#{obj_prod.nome}" />
+                                <br />
+                                <strong>R$<h:outputLabel value="#{obj_prod.preco}" >
+                                        <f:convertNumber pattern="#0.00"/></h:outputLabel>
+                                </strong>
                             </f:facet>
-                        
+
                         </h:panelGrid>
                     </p:panel>
                 </p:dataGrid>
 
 
             </div>
-           
+
             <div class="col-md-12">
-                 <p:separator/>
-            <legend class="text-muted">Pagamento: </legend>
+                <p:separator />
+                <legend class="text-muted">Pagamento: </legend>
 
 
-                <ul class="list-inline center-block" style="margin-top: 20px;">
-                    <li><h:graphicImage library="images" name="card-1.png"
-                                        height="30" /></li>
-                    <li><h:graphicImage library="images" name="card-2.png"
-                                        height="30" /></li>
-                    <li><h:graphicImage library="images" name="card-3.png"
-                                        height="30" /></li>
-                    <li><h:graphicImage library="images" name="card-4.png"
-                                        height="30" /></li>
-                    <li><h:graphicImage library="images" name="card-5.png"
-                                        height="30" /></li>
-                </ul>
-               
+
+
                 <h:outputLabel value="Selecione uma forma de Pagamento " />
-               
-                <p:selectOneRadio value="#{carrinhoCtrl.formaPgto}" 
-                                              converter="omnifaces.SelectItemsConverter" 
-                                              layout="pageDirection" styleClass="text-uppercase">
-                    
-                    <f:selectItems value="#{carrinhoCtrl.lsfpgt}" 
-                                               var="pgt" itemValue="#{pgt}" itemLabel="#{pgt.descricao}" />
-                                <p:ajax listener="#{carrinhoCtrl.actionTipodePgt(pgt)}" 
-                                        update="fm,  teste" />
-                </p:selectOneRadio>
 
-                <p:panel id="teste" widgetVar="testPanel" closable="true" toggleable="true">
-                    <h3 class="text-muted"> <h:outputLabel  value="#{carrinhoCtrl.msg}"/></h3>
+                <h:selectOneRadio value="#{carrinhoCtrl.formaPgto}" required="true"
+                                  converter="omnifaces.SelectItemsConverter" layout="pageDirection"
+                                  styleClass="text-uppercase">
+
+                    <f:selectItems value="#{carrinhoCtrl.lsfpgt}" var="pgt" 
+                                   itemValue="#{pgt}" itemLabel="#{pgt.descricao}" />
+                    <p:ajax listener="#{carrinhoCtrl.actionTipodePgt}"
+                            update="fm,  teste" />
+                </h:selectOneRadio>
+
+                <p:panel id="teste" widgetVar="testPanel" closable="true"
+                         toggleable="true">
+                    <h3 class="text-muted">
+                        <h:outputLabel value="#{carrinhoCtrl.msg}" />
+                    </h3>
 
                 </p:panel>
             </div>
             <p:panel header="Dados do Cartão">
-                <h:outputLabel value="Nome do Titular:"/>
-                <h:inputText value="#{carrinhoCtrl.pessoa.nome}"
-                             />
-                <h:outputLabel value=" Nº do Cartão:"/>
-                <h:inputText value="#{carrinhoCtrl.msg}" required="true" label="Digite Nº do Cartão"
-                             />
-                <h:outputLabel value=" Validade:"/>
-                <h:selectOneMenu 
-                    converter="omnifaces.SelectItemsConverter"
-                    value="#{carrinhoCtrl.validade}">
-                    <f:selectItem  itemValue="01"
-                                   itemLabel="01" />
-                    <f:selectItem  itemValue="02"
-                                   itemLabel="02" />
-                    <f:selectItem  itemValue="03"
-                                   itemLabel="03" />
+                <h:outputLabel value="Nome do Titular:" />
+                <h:inputText value="#{carrinhoCtrl.pessoa.nome}" />
+                <h:outputLabel value=" Nº do Cartão:" />
+                <h:inputText value="#{carrinhoCtrl.msg}" required="true"
+                             label="Digite Nº do Cartão" />
+                <h:outputLabel value=" Validade:" />
+                <h:selectOneMenu converter="omnifaces.SelectItemsConverter"
+                                 value="#{carrinhoCtrl.validade}">
+                    <f:selectItem itemValue="01" itemLabel="01" />
+                    <f:selectItem itemValue="02" itemLabel="02" />
+                    <f:selectItem itemValue="03" itemLabel="03" />
 
                 </h:selectOneMenu>
-                <h:outputLabel value="Ano:"/>
-                <h:selectOneMenu 
-                    converter="omnifaces.SelectItemsConverter"
-                    value="#{carrinhoCtrl.formaPgto.numMaxParc}">
-                    <f:selectItem  itemValue="2016"
-                                   itemLabel="2016" />
-                    <f:selectItem  itemValue="2017"
-                                   itemLabel="2017" />
-                    <f:selectItem  itemValue="2018"
-                                   itemLabel="2018" />
-                    <f:selectItem  itemValue="2019"
-                                   itemLabel="2019" />
+                <h:outputLabel value="Ano:" />
+                <h:selectOneMenu converter="omnifaces.SelectItemsConverter"
+                                 value="#{carrinhoCtrl.msg}">
+                    <f:selectItem itemValue="2016" itemLabel="2016" />
+                    <f:selectItem itemValue="2017" itemLabel="2017" />
+                    <f:selectItem itemValue="2018" itemLabel="2018" />
+                    <f:selectItem itemValue="2019" itemLabel="2019" />
                 </h:selectOneMenu>
-                <label for="fm" class="cols-sm-2 control-label"> Parcelas:</label>
+                <label for="fm" > Parcelas:</label>
                 <h:selectOneMenu id="fm" 
                                  converter="omnifaces.SelectItemsConverter"
                                  value="#{carrinhoCtrl.formaPgto.numMaxParc}">
-                    <f:selectItem  itemValue="#{carrinhoCtrl.formaPgto.numMaxParc}"
-                                   itemLabel="#{carrinhoCtrl.formaPgto.numMaxParc}" />
                     <f:selectItems value="#{carrinhoCtrl.lsint}" var="qtd"
                                    itemValue="#{qtd}" itemLabel="#{qtd.intValue()}" />
                 </h:selectOneMenu>
@@ -255,9 +226,23 @@
 
             <h:commandButton value="Finalizar Compra"
                              action="#{carrinhoCtrl.actionPedido()}"
-                             styleClass="btn btn-block btn-primary" style="margin-top: 20px;"/>
+                             styleClass="btn btn-block btn-primary" style="margin-top: 20px;" />
         </h:form>
-        <div class="clear"> </div>
+        <center>
+            <ul class="list-inline center" style="margin-top: 20px;">
+                <li><h:graphicImage library="images" name="card-1.png"
+                                    height="30" /></li>
+                <li><h:graphicImage library="images" name="card-2.png"
+                                    height="30" /></li>
+                <li><h:graphicImage library="images" name="card-3.png"
+                                    height="30" /></li>
+                <li><h:graphicImage library="images" name="card-4.png"
+                                    height="30" /></li>
+                <li><h:graphicImage library="images" name="card-5.png"
+                                    height="30" /></li>
+            </ul>
+        </center>
+        <div class="clear"></div>
 
     </ui:define>
 </ui:composition>

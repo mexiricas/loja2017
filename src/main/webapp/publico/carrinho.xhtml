@@ -14,7 +14,7 @@
             <div class="col-md-8">
                 <h3>Produtos adicionados ao carrinho</h3>
                 <p:separator/>
-                <p:dataGrid value="#{carrinhoCtrl.lsprod}" var="obj_prod"
+                <p:dataGrid value="#{carrinhoCtrl.lstela}" var="obj_prod"
                             columns="2">
                     <p:panel styleClass="thumbnail">
                         <h:panelGrid columns="2">
@@ -24,6 +24,8 @@
                                         <f:convertNumber pattern="#0.00"/>
                                     </p:outputLabel></strong>
                             </f:facet>
+                            <p:separator/>
+                            <h:column></h:column>
                             <h:column>
                                 <h:commandButton value="+  Adicionar"
                                                  actionListener="#{carrinhoCtrl.inserirProd(obj_prod)}"
@@ -57,7 +59,9 @@
 
                     <small>Quantidades de Produtos : 
                         <h:outputLabel for="forms" value="#{carrinhoCtrl.qdtTotal}"/></small><br/>
-                    <label class="label-info"><p>Total: <span>R$<h:outputLabel value="#{carrinhoCtrl.subtotal}"/></span></p></label><br/>
+                    <label class="label-info"><p>Total: <span>R$<h:outputLabel value="#{carrinhoCtrl.subtotal}">
+                                    <f:convertNumber pattern="#0.00"/></h:outputLabel>
+                            </span></p></label><br/>
                 </div>
 
                 <h:commandButton value="Fechar Compra"

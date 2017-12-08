@@ -20,99 +20,99 @@ import org.springframework.security.web.WebAttributes;
 
 public class AutenticarAdmCliente implements AuthenticationSuccessHandler {
 
-	Session sessao = HibernateUtil.getSessionFactory().openSession();
-	protected final Log logger = LogFactory.getLog(this.getClass());
-	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    Session sessao = HibernateUtil.getSessionFactory().openSession();
+    protected final Log logger = LogFactory.getLog(this.getClass());
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-	protected AutenticarAdmCliente() {
-		super();
-	}
+    protected AutenticarAdmCliente() {
+        super();
+    }
 
-	// API
-	@Override
-	public void onAuthenticationSuccess(final HttpServletRequest request,
-			final HttpServletResponse response,
-			final Authentication authentication) throws IOException {
-		handle(request, response, authentication);
-		clearAuthenticationAttributes(request);
-	}
+    // API
+    @Override
+    public void onAuthenticationSuccess(final HttpServletRequest request,
+            final HttpServletResponse response,
+            final Authentication authentication) throws IOException {
+        handle(request, response, authentication);
+        clearAuthenticationAttributes(request);
+    }
 
-	// IMPL
-	protected void handle(final HttpServletRequest request,
-			final HttpServletResponse response,
-			final Authentication authentication) throws IOException {
+    // IMPL
+    protected void handle(final HttpServletRequest request,
+            final HttpServletResponse response,
+            final Authentication authentication) throws IOException {
 
-		final String targetUrl = determineTargetUrl(authentication);
+        final String targetUrl = determineTargetUrl(authentication);
 
-		if (response.isCommitted()) {
+        if (response.isCommitted()) {
 
-			return;
-		}
-		redirectStrategy.sendRedirect(request, response, targetUrl);
-	}
+            return;
+        }
+        redirectStrategy.sendRedirect(request, response, targetUrl);
+    }
 
-	protected String determineTargetUrl(final Authentication authentication) {
-		boolean isCommon = false;
-		boolean isAdmin = false;
-		final Collection<? extends GrantedAuthority> authorities = authentication
-				.getAuthorities();
-		for (final GrantedAuthority grantedAuthority : authorities) {
-			if (grantedAuthority.getAuthority().equals("ROLE_CLIENTE")) {
-				isCommon = true;
-				break;
-			} else if (grantedAuthority.getAuthority().equals(
-					"ROLE_ADMINISTRATOR")) {
-				isAdmin = true;
-				break;
-			}
-		}
-		if (isCommon) {
-			return "/cliente/finalizar_compra.xhtml";
-		} else if (isAdmin) {
-			return "/admin/principal.xhtml";
-		} else {
-			throw new IllegalStateException();
-		}
-	}
+    protected String determineTargetUrl(final Authentication authentication) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        boolean isCommon = false;
+        boolean isAdmin = false;
+        final Collection<? extends GrantedAuthority> authorities = authentication
+                .getAuthorities();
+        for (final GrantedAuthority grantedAuthority : authorities) {
+            if (grantedAuthority.getAuthority().equals("ROLE_CLIENTE")) {
+                isCommon = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals(
+                    "ROLE_ADMINISTRATOR")) {
+                isAdmin = true;
+                break;
+            }
+        }
+        if (isCommon) {
+            return "/cliente/finalizar_compra.xhtml";
+        } else if (isAdmin) {
+            return "/admin/principal.xhtml";
+        } else {
+            throw new IllegalStateException();
+        }
+    }
 
-	public String getUsuarioLogado() {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder
-				.getContext().getAuthentication().getPrincipal();
-		return userDetails.getUsername();
-	}
+    public String getUsuarioLogado() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        return userDetails.getUsername();
+    }
 
-	/**
-	 * Remove qualquer autenticação que estava antes armazenada na sessão.
-	 */
-	protected final void clearAuthenticationAttributes(
-			final HttpServletRequest request) {
-		final HttpSession session = request.getSession(false);
+    /**
+     * Remove qualquer autenticação que estava antes armazenada na sessão.
+     */
+    protected final void clearAuthenticationAttributes(
+            final HttpServletRequest request) {
+        final HttpSession session = request.getSession(false);
 
-		if (session == null) {
-			return;
-		}
-		session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-	}
+        if (session == null) {
+            return;
+        }
+        session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+    }
 
-	public void setRedirectStrategy(final RedirectStrategy redirectStrategy) {
-		this.redirectStrategy = redirectStrategy;
-	}
+    public void setRedirectStrategy(final RedirectStrategy redirectStrategy) {
+        this.redirectStrategy = redirectStrategy;
+    }
 
-	protected RedirectStrategy getRedirectStrategy() {
-		return redirectStrategy;
-	}
+    protected RedirectStrategy getRedirectStrategy() {
+        return redirectStrategy;
+    }
 
-	// Set<String> roles =
-	// AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-	// if (roles.contains("ROLE_ADMINISTRATOR")) {
-	// System.out.println("ROLE_ADMINISTRATOR");
-	// httpServletResponse.sendRedirect("/admin/principal.xhtml");
-	// }
-	// if (roles.contains("ROLE_CLIENTE")) {
-	// System.out.println("ROLE_CLIENTE");
-	// httpServletResponse.sendRedirect("/cliente/principal.xhtml");
-	// }
-	// sessao.close();
-	// }
-
+    // Set<String> roles =
+    // AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+    // if (roles.contains("ROLE_ADMINISTRATOR")) {
+    // System.out.println("ROLE_ADMINISTRATOR");
+    // httpServletResponse.sendRedirect("/admin/principal.xhtml");
+    // }
+    // if (roles.contains("ROLE_CLIENTE")) {
+    // System.out.println("ROLE_CLIENTE");
+    // httpServletResponse.sendRedirect("/cliente/principal.xhtml");
+    // }
+    // sessao.close();
+    // }
 }
