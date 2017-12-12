@@ -10,10 +10,6 @@ import java.io.Serializable;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-/**
- *
- * @author Denis
- */
 public class ItensPedidosDAO implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -25,306 +25,311 @@ import persistencia.FormaPgtoDAO;
 import persistencia.ItensPedidosDAO;
 import persistencia.PedidoDAO;
 
-/**
- *
- * @author Denis
- */
+
 @SessionScoped
 @ManagedBean(name = "carrinhoCtrl")
 public class CarrinhoCtrl implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private Pessoa pessoa = new Pessoa();
-    private Produto prod = new Produto();
-    private FormaPgto formaPgto;
-    private Pedidos ped = new Pedidos();
-    private ItensPedidos iten = new ItensPedidos();
+	private static final long serialVersionUID = 1L;
+	private Pessoa pessoa = new Pessoa();
+	private Produto prod = new Produto();
+	private FormaPgto formaPgto;
+	private Pedidos ped = new Pedidos();
+	private ItensPedidos iten = new ItensPedidos();
 
-    private List<Produto> lsprod = new ArrayList<>();
-    private List<Produto> lstela = new ArrayList<>();
-    private List<FormaPgto> lsfpgt;
-    private List<Integer> lsint = new ArrayList<>();
-    private List<Cidades> cidades;
-    private List<Estados> estados;
+	private List<Produto> lsprod = new ArrayList<>();
+	private List<Produto> lstela = new ArrayList<>();
+	private List<FormaPgto> lsfpgt;
+	private List<Integer> lsint = new ArrayList<>();
+	private List<Cidades> cidades;
+	private List<Estados> estados;
 
-    private String img_nome = "";
-    private int qdtItens = 0;
-    private int qdtTotal = 0;
-    private int validade = 0;
-    private float subtotal = 0;
-    private float subtotalItem = 0;
-    private int qtdItem = 0;
-    private String msg = "";
-    private float somaDosProdutos = 0;
+	private String img_nome = "";
+	private int qdtItens = 0;
+	private int qdtTotal = 0;
+	private int validade = 0;
+	private float subtotal = 0;
+	private float subtotalItem = 0;
+	private int qtdItem = 0;
+	private String msg = "";
+	private float somaDosProdutos = 0;
 
-    public String inserirProd(Produto p) {
-        if (lsprod.isEmpty()) {
-            lstela.add(p);
-        } else {
-            if (!contem(p)) {
-                lstela.add(p);
-            }
+	public String inserirProd(Produto p) {
+		if (lsprod.isEmpty()) {
+			lstela.add(p);
+		} else {
+			if (!contem(p)) {
+				lstela.add(p);
+			}
 
-        }
-        somaDosProdutos = somaDosProdutos + p.getPreco();
-        lsprod.add(p);
+		}
+		somaDosProdutos = somaDosProdutos + p.getPreco();
+		lsprod.add(p);
 
-        this.qdtTotal = lsprod.size();
-        this.subtotal = somaDosProdutos;
-        prod = p;
+		this.qdtTotal = lsprod.size();
+		this.subtotal = somaDosProdutos;
+		prod = p;
 
-        return "/publico/carrinho?faces-redirect=true";
-    }
+		return "/publico/carrinho?faces-redirect=true";
+	}
 
-    public boolean contem(Produto p) {
-        for (Produto pr : lsprod) {
-            if (p.getNome().equalsIgnoreCase(pr.getNome())) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public boolean contem(Produto p) {
+		for (Produto pr : lsprod) {
+			if (p.getNome().equalsIgnoreCase(pr.getNome())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    public String verificarStatus() {
-        FormaPgtoDAO fpDao = new FormaPgtoDAO();
-        this.lsfpgt = fpDao.listagem("");
-        String usu = getUsuarioLogado();
-        PessoaDAO psDao = new PessoaDAO();
-        this.pessoa = psDao.pesqEmail(usu);
-        return null;
-    }
+	public String verificarStatus() {
+		FormaPgtoDAO fpDao = new FormaPgtoDAO();
+		this.lsfpgt = fpDao.listagem("");
+		String usu = getUsuarioLogado();
+		PessoaDAO psDao = new PessoaDAO();
+		this.pessoa = psDao.pesqEmail(usu);
+		return null;
+	}
 
-    public String actionIntemsRemover(Produto p) {
-        prod = p;
-        this.qdtTotal = this.qdtTotal - 1;
-        this.subtotal = subtotal - p.getPreco();
-        lsprod.remove(p);
-
-        return "/publico/lista_compra?faces-redirect=true";
-
-    }
-
-    public String actionPedido() {
-
-        Date data = new Date(System.currentTimeMillis());
-        Pessoa pes = PessoaDAO.pesqEmail(getUsuarioLogado());
-        ped.setFormaPgto(formaPgto);
-        ped.setPessoa(pes);
-        ped.setPed_dataAutorizacao(data);
-        ped.setPed_dataEmissao(data);
-        ped.setPed_status("ABERTO");
-        ped.setPed_total(subtotal);
-        PedidoDAO.inserir(ped);
-        PessoaDAO.alterar(pessoa);
-
-        for (Produto prod : lsprod) {
-            iten = new ItensPedidos();
-            iten.setIpe_qtde(qdtTotal);
-            iten.setIpe_subtotal(subtotal);
-            iten.setIpe_valorUnit(prod.getPreco());
-            iten.setProd(prod);
-            iten.setPed(ped);
-            ItensPedidosDAO.inserir(iten);
-        }
-        ped = new Pedidos();
-        pessoa = new Pessoa();
-        iten = new ItensPedidos();
-        lsprod = new ArrayList<>();
-
-        return "/public/index?faces-redirect=true";
-    }
-
-    public void actionTipodePgt() {
-        System.out.println("passou");
-        if (formaPgto.getDescricao().contains("BOLETO")) {
-            msg = "Ao final da compra você será apresentado ao boleto "
-                    + "de pagamento. " + "Imprima-o e efetue o pagamento "
-                    + "em qualquer banco para seu pedido ser aprovado.";
-
-            img_nome = "codbarras222";
-            actionQtdParcelas();
-        } else {
-            msg = "";
-            img_nome = "";
-            actionQtdParcelas();
+	public String actionIntemsRemover(Produto p) {
+		prod = p;
+		this.qdtTotal = this.qdtTotal - 1;
+		this.subtotal = subtotal - p.getPreco();
+		this.lsprod.remove(p);
+		
+		if (!contem(p)) {
+            this.lstela.remove(p);
         }
 
-    }
+		return "/publico/lista_compra?faces-redirect=true";
 
-    public void actionQtdParcelas() {
-        lsint = new ArrayList<>();
-        int num = formaPgto.getNumMaxParc();
-        for (int i = 1; i < num + 1; i++) {
-            lsint.add(i);
-        }
-    }
+	}
 
-    public String getUsuarioLogado() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
-        return userDetails.getUsername();
-    }
+	public String actionPedido() {
 
-    // GETTER E SETTERS
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
+		Date data = new Date(System.currentTimeMillis());
+		Pessoa pes = PessoaDAO.pesqEmail(getUsuarioLogado());
+		ped.setFormaPgto(formaPgto);
+		ped.setPessoa(pes);
+		ped.setPed_dataAutorizacao(data);
+		ped.setPed_dataEmissao(data);
+		ped.setPed_status("ABERTO");
+		ped.setPed_total(subtotal);
+		PedidoDAO.inserir(ped);
+		PessoaDAO.alterar(pessoa);
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
+		for (Produto prod : lsprod) {
+			iten = new ItensPedidos();
+			iten.setIpe_qtde(qdtTotal);
+			iten.setIpe_subtotal(subtotal);
+			iten.setIpe_valorUnit(prod.getPreco());
+			iten.setProd(prod);
+			iten.setPed(ped);
+			ItensPedidosDAO.inserir(iten);
+		}
+		ped = new Pedidos();
+		pessoa = new Pessoa();
+		iten = new ItensPedidos();
+		lsprod = new ArrayList<>();
 
-    public Produto getProd() {
-        return prod;
-    }
+		return "/publico/index?faces-redirect=true";
+	}
 
-    public void setProd(Produto prod) {
-        this.prod = prod;
-    }
+	public void actionTipodePgt() {
+		if (formaPgto != null) {
+			System.out.println("passou");
+			if (formaPgto.getDescricao().contains("BOLETO")) {
+				msg = "Ao final da compra você será apresentado ao boleto " + "de pagamento. "
+						+ "Imprima-o e efetue o pagamento " + "em qualquer banco para seu pedido ser aprovado.";
+	
+				img_nome = "codbarras222";
+				actionQtdParcelas();
+			} else {
+				msg = "";
+				img_nome = "";
+				actionQtdParcelas();
+			}
+		}
 
-    public FormaPgto getFormaPgto() {
-        return formaPgto;
-    }
+	}
 
-    public void setFormaPgto(FormaPgto formaPgto) {
-        this.formaPgto = formaPgto;
-    }
+	public void actionQtdParcelas() {
+		lsint = new ArrayList<>();
+		if (formaPgto != null) {
+			int num = formaPgto.getNumMaxParc();
+			for (int i = 1; i < num + 1; i++) {
+				lsint.add(i);
+			}
 
-    public Pedidos getPed() {
-        return ped;
-    }
+		}
 
-    public void setPed(Pedidos ped) {
-        this.ped = ped;
-    }
+	}
 
-    public ItensPedidos getIten() {
-        return iten;
-    }
+	public String getUsuarioLogado() {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return userDetails.getUsername();
+	}
 
-    public void setIten(ItensPedidos iten) {
-        this.iten = iten;
-    }
+	// GETTER E SETTERS
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
 
-    public List<Produto> getLsprod() {
-        return lsprod;
-    }
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 
-    public void setLsprod(List<Produto> lsprod) {
-        this.lsprod = lsprod;
-    }
+	public Produto getProd() {
+		return prod;
+	}
 
-    public List<FormaPgto> getLsfpgt() {
-        return lsfpgt;
-    }
+	public void setProd(Produto prod) {
+		this.prod = prod;
+	}
 
-    public void setLsfpgt(List<FormaPgto> lsfpgt) {
-        this.lsfpgt = lsfpgt;
-    }
+	public FormaPgto getFormaPgto() {
+		return formaPgto;
+	}
 
-    public List<Integer> getLsint() {
-        return lsint;
-    }
+	public void setFormaPgto(FormaPgto formaPgto) {
+		this.formaPgto = formaPgto;
+	}
 
-    public void setLsint(List<Integer> lsint) {
-        this.lsint = lsint;
-    }
+	public Pedidos getPed() {
+		return ped;
+	}
 
-    public List<Cidades> getCidades() {
-        return cidades;
-    }
+	public void setPed(Pedidos ped) {
+		this.ped = ped;
+	}
 
-    public void setCidades(List<Cidades> cidades) {
-        this.cidades = cidades;
-    }
+	public ItensPedidos getIten() {
+		return iten;
+	}
 
-    public List<Estados> getEstados() {
-        return estados;
-    }
+	public void setIten(ItensPedidos iten) {
+		this.iten = iten;
+	}
 
-    public void setEstados(List<Estados> estados) {
-        this.estados = estados;
-    }
+	public List<Produto> getLsprod() {
+		return lsprod;
+	}
 
-    public String getImg_nome() {
-        return img_nome;
-    }
+	public void setLsprod(List<Produto> lsprod) {
+		this.lsprod = lsprod;
+	}
 
-    public void setImg_nome(String img_nome) {
-        this.img_nome = img_nome;
-    }
+	public List<FormaPgto> getLsfpgt() {
+		return lsfpgt;
+	}
 
-    public int getQdtItens() {
-        return qdtItens;
-    }
+	public void setLsfpgt(List<FormaPgto> lsfpgt) {
+		this.lsfpgt = lsfpgt;
+	}
 
-    public void setQdtItens(int qdtItens) {
-        this.qdtItens = qdtItens;
-    }
+	public List<Integer> getLsint() {
+		return lsint;
+	}
 
-    public int getQdtTotal() {
-        return qdtTotal;
-    }
+	public void setLsint(List<Integer> lsint) {
+		this.lsint = lsint;
+	}
 
-    public void setQdtTotal(int qdtTotal) {
-        this.qdtTotal = qdtTotal;
-    }
+	public List<Cidades> getCidades() {
+		return cidades;
+	}
 
-    public int getValidade() {
-        return validade;
-    }
+	public void setCidades(List<Cidades> cidades) {
+		this.cidades = cidades;
+	}
 
-    public void setValidade(int validade) {
-        this.validade = validade;
-    }
+	public List<Estados> getEstados() {
+		return estados;
+	}
 
-    public float getSubtotal() {
-        return subtotal;
-    }
+	public void setEstados(List<Estados> estados) {
+		this.estados = estados;
+	}
 
-    public void setSubtotal(float subtotal) {
-        this.subtotal = subtotal;
-    }
+	public String getImg_nome() {
+		return img_nome;
+	}
 
-    public String getMsg() {
-        return msg;
-    }
+	public void setImg_nome(String img_nome) {
+		this.img_nome = img_nome;
+	}
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+	public int getQdtItens() {
+		return qdtItens;
+	}
 
-    public float getSomaDosProdutos() {
-        return somaDosProdutos;
-    }
+	public void setQdtItens(int qdtItens) {
+		this.qdtItens = qdtItens;
+	}
 
-    public void setSomaDosProdutos(float somaDosProdutos) {
-        this.somaDosProdutos = somaDosProdutos;
-    }
+	public int getQdtTotal() {
+		return qdtTotal;
+	}
 
-    public List<Produto> getLstela() {
+	public void setQdtTotal(int qdtTotal) {
+		this.qdtTotal = qdtTotal;
+	}
 
-        return lstela;
-    }
+	public int getValidade() {
+		return validade;
+	}
 
-    public void setLstela(List<Produto> lstela) {
-        this.lstela = lstela;
-    }
+	public void setValidade(int validade) {
+		this.validade = validade;
+	}
 
-    public float getSubtotalItem() {
-        return subtotalItem;
-    }
+	public float getSubtotal() {
+		return subtotal;
+	}
 
-    public void setSubtotalItem(float subtotalItem) {
-        this.subtotalItem = subtotalItem;
-    }
+	public void setSubtotal(float subtotal) {
+		this.subtotal = subtotal;
+	}
 
-    public int getQtdItem() {
-        return qtdItem;
-    }
+	public String getMsg() {
+		return msg;
+	}
 
-    public void setQtdItem(int qtdItem) {
-        this.qtdItem = qtdItem;
-    }
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public float getSomaDosProdutos() {
+		return somaDosProdutos;
+	}
+
+	public void setSomaDosProdutos(float somaDosProdutos) {
+		this.somaDosProdutos = somaDosProdutos;
+	}
+
+	public List<Produto> getLstela() {
+
+		return lstela;
+	}
+
+	public void setLstela(List<Produto> lstela) {
+		this.lstela = lstela;
+	}
+
+	public float getSubtotalItem() {
+		return subtotalItem;
+	}
+
+	public void setSubtotalItem(float subtotalItem) {
+		this.subtotalItem = subtotalItem;
+	}
+
+	public int getQtdItem() {
+		return qtdItem;
+	}
+
+	public void setQtdItem(int qtdItem) {
+		this.qtdItem = qtdItem;
+	}
 
 }
